@@ -1,0 +1,44 @@
+[
+	{
+		"title": "Producto Lindo",
+		"description": "es uno de los mejores productos",
+		"code": "COD1234",
+		"price": 10523,
+		"status": true,
+		"stock": 150,
+		"category": "Pelotas Cuero",
+		"thumbnails": [
+			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
+			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
+		],
+		"id": 1
+	},
+	{
+		"id": 3,
+		"title": "Producto modificado",
+		"description": "es uno de los mejores productos pero lo modificamos",
+		"code": "COD5478",
+		"price": 8700,
+		"status": false,
+		"stock": 20,
+		"category": "Pelotas Goma",
+		"thumbnails": [
+			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
+			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
+		]
+	},
+	{
+		"title": "Producto Lindo 4",
+		"description": "es uno de los mejores productos",
+		"code": "COD5478",
+		"price": 9800,
+		"status": true,
+		"stock": 20,
+		"category": "Pelotas Goma",
+		"thumbnails": [
+			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
+			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
+		],
+		"id": 4
+	}
+]
