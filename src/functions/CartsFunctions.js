@@ -1,14 +1,14 @@
 // se define la clase CartsFunctions
 // los datos van a persistir en archivo
 
-import fs from 'fs';
+import fs from "fs";
 
 export default class CartsFunctions {
-    constructor(path) {
+  constructor(path) {
     this.path = path;
   }
 
-  addToFile = async ( carts) => {
+  addToFile = async (carts) => {
     try {
       await fs.promises.writeFile(this.path, carts);
     } catch (error) {
@@ -27,10 +27,9 @@ export default class CartsFunctions {
       }
     } else {
       console.log("Archivo no existe");
-      return []
+      return [];
     }
   };
-  
 
   // método que devuelve el total de carritos
   getCarts = () => {
@@ -51,5 +50,4 @@ export default class CartsFunctions {
 
     return carts[pInd];
   };
-
 }

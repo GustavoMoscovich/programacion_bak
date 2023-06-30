@@ -1,14 +1,14 @@
 // se define la clase ProductFunctions
 // los datos van a persistir en archivo
 
-import fs from 'fs';
+import fs from "fs";
 
 export default class ProductFunctions {
-    constructor(path) {
+  constructor(path) {
     this.path = path;
   }
 
-  addToFile = async ( products) => {
+  addToFile = async (products) => {
     try {
       await fs.promises.writeFile(this.path, products);
     } catch (error) {
@@ -27,10 +27,9 @@ export default class ProductFunctions {
       }
     } else {
       console.log("Archivo no existe");
-      return []
+      return [];
     }
   };
-  
 
   // método que devuelve el total de productos
   getProducts = () => {
@@ -52,6 +51,4 @@ export default class ProductFunctions {
 
     return products[pInd];
   };
-
-
 }
