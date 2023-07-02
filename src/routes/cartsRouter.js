@@ -75,7 +75,7 @@ router.delete("/:id", (req, res) => {
   }
 });
 
-// agrega al carrito CID el producto PID -- Si PID existe en CID se agrega como nuevo con qty=1,
+// agrega al carrito CID el producto PID -- Si PID existe en CID suma qty en 1, si PID no existe se agrega como nuevo con qty=1,
 router.post("/:cid/product/:pid", (req, res) => {
   const cartId = Number(req.params.cid);
   const prodId = Number(req.params.pid);
