@@ -15,13 +15,13 @@
 	},
 	{
 		"id": 3,
-		"title": "Producto modificado",
-		"description": "es uno de los mejores productos pero lo modificamos",
+		"title": "Prod Modif",
+		"description": "bicicleta con cambios shimano II",
 		"code": "COD5478",
-		"price": 8700,
+		"price": 123450,
 		"status": false,
-		"stock": 20,
-		"category": "Pelotas Goma",
+		"stock": 100,
+		"category": "Bicicletas",
 		"thumbnails": [
 			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
 			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"

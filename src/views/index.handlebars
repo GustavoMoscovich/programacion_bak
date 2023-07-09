@@ -1,13 +1,21 @@
 <div>
-    <h1>Listado de Productos 04</h1>
+  <h1>Listado estático de productos</h1>
+  <div>
+    <p>Esta lista de productos es estática y no se actualiza de forma
+      automática.
+    </p>
+    <p>Si quiere visualizar la lista en tiempo real acceda a
+      http://localhost:8080/realtimeproducts
+    </p>
+  </div>
 
-    {{#each prod}}
-        <div>
-            <p>ID:   {{this.id}}</p>
-            <p>CODIGO:   {{this.code}}</p>
-            <p>DESCRIPCIÓN:   {{this.description}}</p>
-            <p>PRECIO:  {{this.price}}</p>
-            <p>----------------------------------</p>
-        </div>
-    {{/each}}
+  {{#each prod}}
+    <div>
+      <p>ID: {{this.id}}</p>
+      <p>CODIGO: {{this.code}}</p>
+      <p>DESCRIPCIÓN: {{this.description}}</p>
+      <p>PRECIO: {{this.price}}</p>
+      <p>----------------------------------</p>
+    </div>
+  {{/each}}
 </div>
