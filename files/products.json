@@ -30,7 +30,7 @@
 	{
 		"title": "Producto Lindo 4",
 		"description": "es uno de los mejores productos",
-		"code": "COD5478",
+		"code": "COD6638",
 		"price": 9800,
 		"status": true,
 		"stock": 20,
@@ -40,5 +40,33 @@
 			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
 		],
 		"id": 4
+	},
+	{
+		"title": "Prod Basico",
+		"description": "remera básica blanca",
+		"code": "COD6345",
+		"price": 9800,
+		"status": true,
+		"stock": 20,
+		"category": "Remeras",
+		"thumbnails": [
+			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
+			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
+		],
+		"id": 5
+	},
+	{
+		"title": "Robots",
+		"description": "robot aspiradora con mopa",
+		"code": "ROB6994",
+		"price": 12500,
+		"status": true,
+		"stock": 5,
+		"category": "Robots",
+		"thumbnails": [
+			"https://stylewatch.vtexassets.com/arquivos/ids/227477/Smartwatch_Colmi_COLAND1MBL_02.jpg?v=638176013782730000",
+			"https://stylewatch.vtexassets.com/arquivos/ids/213254/Smartwatch_Apple_APPMKN73LEA_03.jpg?v=637878907270470000"
+		],
+		"id": 6
 	}
 ]
