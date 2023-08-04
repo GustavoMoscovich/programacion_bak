@@ -6,9 +6,10 @@ prd.innerHTML = '';
 
 socket.on("listOfProducts", (prods) => {
   let lineproduct = " ";
-  console.log(typeof { prods } )
-  console.log({ prods });
-  prods.products.forEach((e) => {
+  const xxx = Object.values(prods);
+  console.log(typeof  xxx  )
+  console.log( xxx );
+  xxx.forEach((e) => {
     lineproduct += `ID: ${e.id} -- Código: ${e.code} -- Descr: ${e.description} -- Precio: ${e.price}  <br/>`;
   });
   prd.innerHTML = lineproduct;

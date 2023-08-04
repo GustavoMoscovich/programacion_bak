@@ -62,15 +62,13 @@ app.use(notFoundHandler);
 
 const server = app.listen(PORT,ready);
 
-//const prodManagerDb = new ProductFunctionsDb();
-//const products = prodManagerDb.getProducts();
+const prodManagerDb = new ProductFunctionsDb();
+const products = await prodManagerDb.getProducts();
 
 // implementación de Websockets
-//const io = new Server(server);
+const io = new Server(server);
 
-/* io.on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log("equipo conectado");
-  console.log('en app ',  products)
   socket.emit("listOfProducts",   products  );
 });
- */
