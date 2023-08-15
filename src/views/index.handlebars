@@ -1,21 +1,37 @@
 <div>
   <h1>Listado estático de productos</h1>
-  <div>
-    <p>Esta lista de productos es estática y no se actualiza de forma
-      automática.
-    </p>
-    <p>Si quiere visualizar la lista en tiempo real acceda a
-      http://localhost:8080/realtimeproducts
-    </p>
-  </div>
+    <div class="container ecommerce">
 
-  {{#each prod}}
-    <div>
-      <p>ID: {{this.id}}</p>
-      <p>CODIGO: {{this.code}}</p>
-      <p>DESCRIPCIÓN: {{this.description}}</p>
-      <p>PRECIO: {{this.price}}</p>
-      <p>----------------------------------</p>
+       <div class="row">
+         <!-- Elementos que se generan a partir de la base de datos creada con JSON -->
+         <main id="items" class="col-sm-8 row">
+
+            {{#each prod}}
+              
+            <div class="card col-sm-4 text-center card_agregada">
+                <div class="card-body">
+                  <h6 class="card-title"> CODIGO: {{this.code}} </h6>
+                  <p class="card-text"> {{this.description}}  </p>
+                  <img src="{{this.thumbnails.[0]}}" class="img-fluid" alt="imagen" />
+                  
+                  <p class="card-text"> $ {{this.price}}  </p>
+                  <input type="number" class="text-center" style="width: 150px" value="0" min="0" max={{this.stock}} name="quantity" id={{this._id}}>
+                  <input id="add-to-cart" type="button" onclick="addToCart('{{this._id}}' )" style="width: 150px" class="btn btn-primary mt-2" value="Agregar al Carrito">
+                </div>
+            </div>
+            {{/each}}
+
+         </main>
+         <!-- Carrito de Compras que se despliega a un costado -->
+          <aside class="col-sm-4">
+            <h2>Carrito</h2>
+            <!-- Despliega los Elementos que se van agregando al carrito -->
+            <ul id="carrito" class="list-group"></ul>
+            <hr>
+            <!-- Muestra la suma del total de los productos del carrito -->
+            <p class="text-right">Total: <span id="total"></span>&dollar;</p>
+              <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+          </aside>
+      </div>
     </div>
-  {{/each}}
 </div>

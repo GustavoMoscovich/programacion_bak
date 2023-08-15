@@ -1,6 +1,7 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import viewproductsRouter from "./routes/viewproducts.router.js";
+import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
 import viewRealTimeProducts from "./routes/realtimeproducts.router.js";
 import { Server } from "socket.io";
 import __dirname from "./utils.js";
@@ -48,7 +49,7 @@ app.set("views", `${__dirname}/views`);
 app.set("view engine", "handlebars");
 
 // muestra la lista de productos por medio de HandleBars
-app.use("/", viewproductsRouter);
+app.use("/", viewproductsRouterDb);
 
 //Activa lista de productos en real time por Websockets
 app.use("/realtimeproducts", viewRealTimeProducts);

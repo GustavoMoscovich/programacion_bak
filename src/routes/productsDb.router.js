@@ -21,6 +21,7 @@ router.post("/", async (req, res, next) => {
 // Obtiene la lista de productos de la base de MongoDB
 router.get("/", async (req, res, next) => {
   try {
+    console.log("paso por el get")
     let allproducts = await Productdb.find();
     return res.status(200).json({
       success: true,
