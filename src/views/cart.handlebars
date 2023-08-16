@@ -8,15 +8,16 @@
           <div class="container m-2">
             <div class="row">
                 <div class="col-12 d-flex flex-column justify-content-center" id="cart">
-                  {{#each cart}}
+
+                  {{#each cardet}}
 
                     <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
-                        <img src="{{this.products.thumbnails.[0]}}" class="card-img-top p-3 m-0" style="width: 100px" alt="{{this.products.title}}">
-                        <p class="card-text text-center p-2 m-0" style="width: 100px">{{this.products.title}}</p>
-                        <input id="{{this.products.id}}" onclick="delprodcart({{this.products.id}})" type="button" style="width: 25px" class="quit-units btn btn-danger p-1 m-1" value="-">
-                        <input type="text" disabled id="qu{{this.products.id}}" class="card-text text-center p-2 m-0" style="width: 50px" value={{this.products.quantity}}>
-                        <input id="a{{this.products.id}}" onclick="addUnits({{this.products.id}})" type="button" style="width: 25px" class="btn btn-success p-1 m-1" value="+">
-                        <p id="p${{this.products.id}" class="card-text text-center p-2 m-0" style="width: 100px">${{this.products.price}}</p>
+                        <img src="{{this.id.thumbnails.[0]}}" class="card-img-top p-3 m-0" style="width: 100px" alt="{{this.id.title}}">
+                        <p class="card-text text-center p-2 m-0" style="width: 150px">{{this.id.title}}</p>
+                        <input id="s{{this.id._id}}" onclick="modprodcart('{{this.id._id}}','qu{{this.id._id}}')" type="button" style="width: 150px" class="quit-units btn btn-success p-1 m-1" value="Modif Cantidad">
+                        <input type="text" id="qu{{this.id._id}}" class="card-text text-center p-2 m-0" style="width: 50px" value={{this.quantity}}>
+                        <input id="a{{this.id._id}}" onclick="delprodcart('{{this.id._id}}')" type="button" style="width: 150px" class="btn btn-danger p-1 m-1" value="Elimina Producto">
+                        <p id="p${{this.id._id}}" class="card-text text-center p-2 m-0" style="width: 100px">${{this.id.price}}</p>
                     </div>
 
                   {{/each}}

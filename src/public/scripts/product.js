@@ -1,9 +1,8 @@
 
 async function addToCart (elem) {
-    console.log('ok');
-    console.log(elem);
+
     let selector = document.getElementById(elem)
-    console.log('Selector: ',selector)
+
     let quantity = selector.value
     console.log('qty: ',quantity)
     if (quantity>0) {

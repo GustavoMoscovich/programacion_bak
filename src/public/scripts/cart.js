@@ -1,67 +1,39 @@
-async function fetchCart() {
-    try {
-        let response = await fetch('/api/carts/64cc17b302a4e5bd2baa41f6')
-        response = await response.json()
-        //console.log(response)
-        let templates = ''
-        let total = 0
-        for (let prod of response.cart.products) {
-            if (prod.quantity>0) {
-                let res = await fetch('/api/products/'+prod.id)
-                res = await res.json()
-                //console.log(res)
-                total = total + prod.quantity * res.product.price
-                templates = templates + `
-                    <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
-                        <img src="${res.product.url_photo}" class="card-img-top p-3 m-0" style="width: 100px" alt="${res.product.title}">
-                        <p class="card-text text-center p-2 m-0" style="width: 100px">${res.product.title}</p>
-                        <input id="q${res.product.pid}" onclick="quitUnits(${res.product.pid})" type="button" style="width: 25px" class="quit-units btn btn-danger p-1 m-1" value="-">
-                        <input type="text" disabled id="qu${res.product.pid}" class="card-text text-center p-2 m-0" style="width: 50px" value=${prod.quantity}>
-                        <input id="a${res.product.pid}" onclick="addUnits(${res.product.pid})" type="button" style="width: 25px" class="btn btn-success p-1 m-1" value="+">
-                        <p id="p${res.product.pid}" class="card-text text-center p-2 m-0" style="width: 100px">U$D${res.product.price}</p>
-                    </div>
-                `
-            }
-        }
-        templates = templates + `                                
-            <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
-                <p class="card-text text-end p-2 m-0" style="width: 400px">TOTAL: U$D${total}</p>
-            </div>
-        `
-        document.getElementById('cart').innerHTML = templates
-    } catch (error) {
-        console.log(error);
-    }
-}
-fetchCart()
 
-async function addUnits(pid) {
+// Modifica las unidades de uno de los productos del carrito. La llamada viene desde el carrito.
+async function modprodcart(pid,elem) {
+    let selector = document.getElementById(elem)
+    let quantity = selector.value
+    console.log('MOD qty: ',quantity)
+
     try {
-        let response = await fetch(`/api/carts/${cid}/product/${pid}/1`, {
+        let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}/${quantity}`, {
             method: 'PUT'
         })
         response = await response.json()
         //console.log(response);
         if (response.status===200) {
-            location.replace('/cart.html?cid='+cid)
+            location.replace('/cart')
         }else {
             alert(response.message)
+            location.replace('/cart')
         }
     } catch (error) {
         console.log(error);
     }
 }
 
-async function quitUnits(pid) {
+// Elimina uno de los productos del carrito. La llamada viene desde el carrito
+async function delprodcart(pid) {
     try {
-        let response = await fetch(`/api/carts/${cid}/product/${pid}/1`, {
+        let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}`, {
             method: 'DELETE'
         })
         response = await response.json()
-        //console.log(response);
+        console.log('RESPONSE: ',response);
         if (response.status===200) {
-            location.replace('/cart.html?cid='+cid)
-        }else {
+            location.replace('/cart')
+        } else {
+            location.replace('/cart')
             alert(response.message)
         }
     } catch (error) {
