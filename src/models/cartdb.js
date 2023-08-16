@@ -6,6 +6,10 @@ let schema = new Schema({
     products : [ { id: {type: Schema.Types.ObjectId, ref: 'Productdb', requiered:true}, quantity: {type: Number, default: 0} }] 
 })
 
+/* schema.pre('find', function(){
+    this.populate('products[].id')
+})
+ */
 const Cartdb = model(collection,schema)
 
 export default Cartdb

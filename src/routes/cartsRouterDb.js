@@ -83,7 +83,6 @@ router.put("/:cid/product/:pid/:units", async (req, res, next) => {
       // el producto NO existe en el carrito, entonces lo doy de alta en el mismo
 
       let data = JSON.parse(`{ "id": "${pid}", "quantity": ${Number(units)} }`);
-      console.log("DATA INS: ", data);
       let onecart = await Cartdb.findByIdAndUpdate(cid, {
         $push: { products: data },
       });

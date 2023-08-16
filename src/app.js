@@ -2,7 +2,8 @@ import express from "express";
 import handlebars from "express-handlebars";
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
-import viewRealTimeProducts from "./routes/realtimeproducts.router.js";
+//import viewRealTimeProducts from "./routes/realtimeproducts.router.js";
+import viewcartsDb from "./routes/viewcartsDb.router.js";
 import { Server } from "socket.io";
 import __dirname from "./utils.js";
 import { connect } from "mongoose";
@@ -51,8 +52,8 @@ app.set("view engine", "handlebars");
 // muestra la lista de productos por medio de HandleBars
 app.use("/", viewproductsRouterDb);
 
-//Activa lista de productos en real time por Websockets
-app.use("/realtimeproducts", viewRealTimeProducts);
+//Muestra el carrito por medio de HandleBars
+app.use("/cart", viewcartsDb);
 
 // acceso a las APIs de productos y carrito
 app.use("/api/products", prodRouterDb); // se configura para que trabaje con el Route que opera con MongoDB

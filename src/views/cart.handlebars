@@ -1,0 +1,30 @@
+<div>
+  <h1>Carrito de Compras</h1>
+    <div class="container ecommerce">
+
+       <div class="row">
+         <!-- Elementos que se generan a partir de la base de datos creada con JSON -->
+        <main class="d-flex justify-content-center align-items-center">
+          <div class="container m-2">
+            <div class="row">
+                <div class="col-12 d-flex flex-column justify-content-center" id="cart">
+                  {{#each cart}}
+
+                    <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
+                        <img src="{{this.products.thumbnails.[0]}}" class="card-img-top p-3 m-0" style="width: 100px" alt="{{this.products.title}}">
+                        <p class="card-text text-center p-2 m-0" style="width: 100px">{{this.products.title}}</p>
+                        <input id="{{this.products.id}}" onclick="delprodcart({{this.products.id}})" type="button" style="width: 25px" class="quit-units btn btn-danger p-1 m-1" value="-">
+                        <input type="text" disabled id="qu{{this.products.id}}" class="card-text text-center p-2 m-0" style="width: 50px" value={{this.products.quantity}}>
+                        <input id="a{{this.products.id}}" onclick="addUnits({{this.products.id}})" type="button" style="width: 25px" class="btn btn-success p-1 m-1" value="+">
+                        <p id="p${{this.products.id}" class="card-text text-center p-2 m-0" style="width: 100px">${{this.products.price}}</p>
+                    </div>
+
+                  {{/each}}
+
+                </div>
+            </div>
+          </div>
+         </main>
+      </div>
+    </div>
+</div>

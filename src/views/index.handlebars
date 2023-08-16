@@ -1,5 +1,5 @@
 <div>
-  <h1>Listado estático de productos</h1>
+  <h1>Productos del Ecommerce</h1>
     <div class="container ecommerce">
 
        <div class="row">
@@ -11,8 +11,8 @@
             <div class="card col-sm-4 text-center card_agregada">
                 <div class="card-body">
                   <h6 class="card-title"> CODIGO: {{this.code}} </h6>
-                  <p class="card-text"> {{this.description}}  </p>
-                  <img src="{{this.thumbnails.[0]}}" class="img-fluid" alt="imagen" />
+                  <p class="card-text"> {{this.title}}  </p>
+                  <img src="{{this.thumbnails.[0]}}" class="img-fluid" alt="imagen" width="800" height="300"/>
                   
                   <p class="card-text"> $ {{this.price}}  </p>
                   <input type="number" class="text-center" style="width: 150px" value="0" min="0" max={{this.stock}} name="quantity" id={{this._id}}>
@@ -22,16 +22,7 @@
             {{/each}}
 
          </main>
-         <!-- Carrito de Compras que se despliega a un costado -->
-          <aside class="col-sm-4">
-            <h2>Carrito</h2>
-            <!-- Despliega los Elementos que se van agregando al carrito -->
-            <ul id="carrito" class="list-group"></ul>
-            <hr>
-            <!-- Muestra la suma del total de los productos del carrito -->
-            <p class="text-right">Total: <span id="total"></span>&dollar;</p>
-              <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
-          </aside>
+
       </div>
     </div>
 </div>
