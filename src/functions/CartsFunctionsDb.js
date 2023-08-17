@@ -11,7 +11,6 @@ export default class CartFunctionsDb {
         "mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce"
       );
       let allcart = await Cartdb.find({ _id: "64cc17b302a4e5bd2baa41f6" })
-        .populate("products.id", { description: 0 })
         .lean();
       const resultado = Object.values(allcart);
       return resultado;

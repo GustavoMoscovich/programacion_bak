@@ -36,7 +36,6 @@ router.put("/:id", async (req, res, next) => {
   try {
     let { id } = req.params;
     let data = req.body;
-    console.log("DATA 1: ", data);
     let onecart = await Cartdb.findByIdAndUpdate(id, data);
     return res.status(200).json({
       success: true,

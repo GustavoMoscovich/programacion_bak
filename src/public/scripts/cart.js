@@ -3,7 +3,6 @@
 async function modprodcart(pid,elem) {
     let selector = document.getElementById(elem)
     let quantity = selector.value
-    console.log('MOD qty: ',quantity)
 
     try {
         let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}/${quantity}`, {

@@ -4,7 +4,7 @@ async function addToCart (elem) {
     let selector = document.getElementById(elem)
 
     let quantity = selector.value
-    console.log('qty: ',quantity)
+
     if (quantity>0) {
         
         try {
@@ -25,3 +25,10 @@ async function addToCart (elem) {
         alert('Insert units!')
     }
 }
+
+function findText () {
+    let selector = document.getElementById('searchtext')
+    let texttosearch = selector.value
+    location.replace('/?search='+texttosearch)
+}
+

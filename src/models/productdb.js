@@ -4,7 +4,7 @@ import mongoosePaginate from "mongoose-paginate-v2"
 let collection = 'products'
 
 let schema = new Schema({
-    title : {type:String, requiered:true},
+    title : {type:String, requiered:true, index:true},
     description : {type:String, requiered:true},
     code : {type:String, requiered:true,unique:true},
     price : {type:Number, default:0},

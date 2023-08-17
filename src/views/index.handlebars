@@ -1,11 +1,20 @@
 <div>
   <h1>Productos del Ecommerce</h1>
     <div class="container ecommerce">
+      <p>
 
+      </p>
+      <div>
+        <label>Ingrese Texto para Filtrar: </label>
+        <input class="text-center" style="width: 150px" value="" name="searchtext" id="searchtext">
+        <input id="findText" type="button" onclick="findText()" style="width: 150px" class="btn btn-primary mt-2" value=" Filtrar ">
+      </div>
+      <p>
+
+      </p>
        <div class="row">
          <!-- Elementos que se generan a partir de la base de datos creada con JSON -->
          <main id="items" class="col-sm-8 row">
-
             {{#each prod}}
               
             <div class="card col-sm-4 text-center card_agregada">
