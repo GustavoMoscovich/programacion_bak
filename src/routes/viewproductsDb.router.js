@@ -5,7 +5,8 @@ const router = Router();
 const prodManagerDb = new ProductFunctionsDb("");
 
 router.get('/' ,async (req, res) => {
-    const prod = await prodManagerDb.getProducts();
+    const {limit} = req.query
+    const prod = await prodManagerDb.getProducts( (typeof(limit)=='undefined'? 10 : limit));
     res.render('index',  {prod} )
 
 })

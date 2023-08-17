@@ -5,13 +5,17 @@ import Productdb from "../models/productdb.js";
 
 export default class ProductFunctionsDb {
   // método que devuelve el total de productos
-  getProducts = async () => {
+  getProducts = async (limit) => {
     try {
       await connect(
         "mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce"
       );
-      let allproducts = await Productdb.find().lean();
-      const resultado = Object.values(allproducts);
+      //let allproducts = await Productdb.find().lean();
+      let allproducts = await Productdb.paginate({},{limit})
+
+      const res = Object.values(allproducts);
+      const resultado = JSON.parse( JSON.stringify(res[0]) ) 
+      console.log(JSON.parse( JSON.stringify(resultado[0]) ))
       return resultado;
     } catch (error) {
       return error;
