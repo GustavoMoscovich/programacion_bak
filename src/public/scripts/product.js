@@ -26,9 +26,14 @@ async function addToCart (elem) {
     }
 }
 
+
 function findText () {
     let selector = document.getElementById('searchtext')
     let texttosearch = selector.value
-    location.replace('/?search='+texttosearch)
+    location.replace('/?search='+texttosearch+'&page=1')
+}
+
+function selectPage (page) {
+    location.replace('/?page='+page)
 }
 

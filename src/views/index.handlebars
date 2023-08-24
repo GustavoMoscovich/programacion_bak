@@ -4,19 +4,36 @@
       <p>
 
       </p>
-      <div>
-        <label>Ingrese Texto para Filtrar: </label>
-        <input class="text-center" style="width: 150px" value="" name="searchtext" id="searchtext">
-        <input id="findText" type="button" onclick="findText()" style="width: 150px" class="btn btn-primary mt-2" value=" Filtrar ">
-      </div>
+        <div>
+          <label>Ingrese Texto para Filtrar: </label>
+          <input class="text-center" style="width: 150px" value="" name="searchtext" id="searchtext">
+          <input id="findText" type="button" onclick="findText()" style="width: 150px" class="btn btn-primary mt-2" value=" Filtrar ">
+        </div>
       <p>
 
       </p>
+
+      <div>
+
+          {{#if hasPrevPage}}
+            <input id="prevPage" type="button" onclick="selectPage('{{prevPage}}' )" style="width: 150px" class="btn btn-primary mt-2" value="Página Anterior">
+          {{else}}
+            <input disabled id="prevPage" type="button" onclick="selectPage('{{prevPage}}' )" style="width: 150px" class="btn btn-primary mt-2" value="Página Anterior">
+          {{/if}}
+
+          {{#if hasNextPage}}
+            <input id="nextPage" type="button" onclick="selectPage('{{nextPage}}' )" style="width: 150px" class="btn btn-primary mt-2" value="Página Siguiente">
+          {{else}}
+            <input disabled id="nextPage" type="button" onclick="selectPage('{{nextPage}}' )" style="width: 150px" class="btn btn-primary mt-2" value="Página Siguiente">
+          {{/if}}
+
+      </div>
+
        <div class="row">
          <!-- Elementos que se generan a partir de la base de datos creada con JSON -->
+
          <main id="items" class="col-sm-8 row">
-            {{#each prod}}
-              
+            {{#each docs}}
             <div class="card col-sm-4 text-center card_agregada">
                 <div class="card-body">
                   <h6 class="card-title"> CODIGO: {{this.code}} </h6>
@@ -29,6 +46,10 @@
                 </div>
             </div>
             {{/each}}
+
+        <div>
+          <p> Página Actual {{page}} </p>
+        </div>
 
          </main>
 
