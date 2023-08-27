@@ -1,12 +1,13 @@
 import { Router } from "express";
 import Productdb from "../models/productdb.js";
+import is_admin from "../middlewares/is_admin.js";
 
 const router = Router();
 
 //CRUD
 
 // crea un nuevo producto en la base de MongoDB
-router.post("/", async (req, res, next) => {
+router.post("/",is_admin , async (req, res, next) => {
   try {
     let oneprod = await Productdb.create(req.body);
     return res.status(201).json({

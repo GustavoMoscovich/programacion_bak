@@ -10,9 +10,13 @@ export default class CartFunctionsDb {
       await connect(
         "mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce"
       );
+
       let allcart = await Cartdb.find({ _id: "64cc17b302a4e5bd2baa41f6" })
-        .lean();
-      const resultado = Object.values(allcart);
+      const res = JSON.parse( JSON.stringify(allcart[0]) )
+      const resultado = res
+
+//      let allcart = await Cartdb.find({ _id: "64cc17b302a4e5bd2baa41f6" }).lean();
+//      const resultado = Object.values(allcart);
       return resultado;
     } catch (error) {
       return error;

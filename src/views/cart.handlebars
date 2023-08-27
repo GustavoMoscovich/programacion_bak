@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-12 d-flex flex-column justify-content-center" id="cart">
 
-                  {{#each cardet}}
+                  {{#each products}}
 
                     <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
                         <img src="{{this.id.thumbnails.[0]}}" class="card-img-top p-3 m-0" style="width: 100px" alt="{{this.id.title}}">
@@ -21,6 +21,10 @@
                     </div>
 
                   {{/each}}
+
+                  <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
+                      <p class="card-text text-end p-2 m-0" style="width: 400px">Total del Carrito: $ {{totalprice}}</p>
+                  </div>
 
                 </div>
             </div>

@@ -26,7 +26,6 @@ async function addToCart (elem) {
     }
 }
 
-
 function findText () {
     let selector = document.getElementById('searchtext')
     let texttosearch = selector.value

@@ -9,7 +9,6 @@ async function modprodcart(pid,elem) {
             method: 'PUT'
         })
         response = await response.json()
-        //console.log(response);
         if (response.status===200) {
             location.replace('/cart')
         }else {

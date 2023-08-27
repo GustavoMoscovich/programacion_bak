@@ -1,15 +1,26 @@
 import express from "express";
 import handlebars from "express-handlebars";
-import viewproductsRouter from "./routes/viewproducts.router.js";
-import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
-//import viewRealTimeProducts from "./routes/realtimeproducts.router.js";
-import viewcartsDb from "./routes/viewcartsDb.router.js";
 import { Server } from "socket.io";
 import __dirname from "./utils.js";
 import { connect } from "mongoose";
-import errorHandler from "./middlewares/errorHandler.js"
-import notFoundHandler from "../src/middlewares/notFoundHandler.js"
-import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js"
+import cookieParser from "cookie-parser";
+import expressSession from 'express-session';
+import MongoStore from "connect-mongo";
+
+
+//
+import viewproductsRouter from "./routes/viewproducts.router.js";
+import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
+import viewcartsDb from "./routes/viewcartsDb.router.js";
+import registerDb from "./routes/registerDb.router.js";
+import newProductDb from "./routes/newProductDb.router.js"
+import loginDb from "./routes/loginDb.router.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import notFoundHandler from "../src/middlewares/notFoundHandler.js";
+import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js";
+import cookieRouter from "./routes/cookiesRouter.js";
+import sessions_router from "./routes/sessionsRouter.js";
+
 
 //********* Para manejo de datos usando File System  ************ */
 import prodRouter from "../src/routes/products.router.js";
@@ -19,6 +30,8 @@ import cartRouter from "../src/routes/cartsRouter.js";
 //********* Para manejo usando Mongoose  ************ */
 import prodRouterDb from "../src/routes/productsDb.router.js";
 import cartRouterDb from "../src/routes/cartsRouterDb.js";
+import userRouterDb from "../src/routes/usersDb.router.js"
+
 
 
 // se define el port TCP para el servidor WEB y la conexión a MongoDB
@@ -42,6 +55,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
+// middlewares
+app.use(cookieParser('clave_cookie_back'));
+app.use(expressSession({
+  store: MongoStore.create({
+    mongoUrl: 'mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce',
+    ttl: 180
+  }),
+  secret: 'clave_session_back',
+  resave: true,
+  saveUninitialized: true
+}));
 
 
 // implementación HandleBars
@@ -49,15 +73,28 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "handlebars");
 
-// muestra la lista de productos por medio de HandleBars
+// Lista de productos
 app.use("/", viewproductsRouterDb);
 
-//Muestra el carrito por medio de HandleBars
+//Carrito
 app.use("/cart", viewcartsDb);
 
-// acceso a las APIs de productos y carrito
+//Registro de usuarios
+app.use("/register", registerDb);
+
+//Registro de nuevos productos
+app.use("/newproduct", newProductDb);
+
+//Login
+app.use("/login", loginDb);
+
+// acceso a las APIs de productos, carritos, cookies, etc.
 app.use("/api/products", prodRouterDb); // se configura para que trabaje con el Route que opera con MongoDB
 app.use("/api/carts", cartRouterDb); // se configura para que trabaje con el Route que opera con MongoDB
+app.use("/api/auth", userRouterDb);
+app.use("/api/cookies", cookieRouter);
+app.use("/api/sessions", sessions_router);
+
 
 app.use(errorHandler);
 app.use(notFoundHandler);

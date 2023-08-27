@@ -19,7 +19,6 @@ export default class ProductFunctionsDb {
       let allproducts = await Productdb.paginate({title: {$regex: search, $options: 'i'}  },options)
 
       const res = JSON.parse( JSON.stringify(allproducts) )
-      console.log(res)
       const resultado = res
 
       return resultado;

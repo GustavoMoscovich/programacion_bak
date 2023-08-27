@@ -1,14 +1,22 @@
 <div>
-  <h1>Productos del Ecommerce</h1>
+  <h3>Lista de Productos</h3>
     <div class="container ecommerce">
-      <p>
 
+      <p style="color:blue;font-size:20px;">
+        {{#if userlogueado}}
+          Bienvenido Usuario: <strong> {{user}} </strong>
+            <input id='btnlogout' type="button" onclick="logOut()" class="btn btn-outline-dark m-2 ms-0 w-22" value="  Log Out !  ">
+        {{else}}
+          No hay usuario logueado....
+        {{/if}}
       </p>
-        <div>
-          <label>Ingrese Texto para Filtrar: </label>
-          <input class="text-center" style="width: 150px" value="" name="searchtext" id="searchtext">
-          <input id="findText" type="button" onclick="findText()" style="width: 150px" class="btn btn-primary mt-2" value=" Filtrar ">
-        </div>
+
+      <div>
+        <label>Ingrese Texto para Filtrar: </label>
+        <input class="text-center" style="width: 150px" value="" name="searchtext" id="searchtext">
+        <input id="findText" type="button" onclick="findText()" style="width: 150px" class="btn btn-primary mt-2" value=" Filtrar ">
+      </div>
+
       <p>
 
       </p>
