@@ -1,3 +1,9 @@
+// Este Ruter Graba a los usuarios en MongoDB
+// Este Router es reemplazado por el router auth.js que aplica la misma funcionalidad
+// pero aplicando medidas de seguridad para encriptar datos sensibles de los usuarios
+// y los inicios de sesion
+//
+
 import { Router } from "express";
 import Userdb from "../models/userdb.js";
 import is_form_users_ok from "../middlewares/is_form_users_ok.js";
@@ -22,7 +28,6 @@ router.post("/register",is_form_users_ok, is_8_char ,async (req, res, next) => {
 // valida el usuario que intenta hacer el login
 router.post('/login', is_8_char, is_valid_user, async(req,res,next)=> {
   try {
-      console.log('paso por login.....')
       req.session.email = req.body.email
       let one = await Userdb.findOne({email:req.body.email})  //recupero el usuario para identificar el rol
       req.session.role = one.role

@@ -1,3 +1,6 @@
+import 'dotenv/config'
+
+
 import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
@@ -6,6 +9,8 @@ import { connect } from "mongoose";
 import cookieParser from "cookie-parser";
 import expressSession from 'express-session';
 import MongoStore from "connect-mongo";
+import inicializePassport from './middlewares/passport.js'
+import passport from 'passport'
 
 
 //
@@ -30,8 +35,8 @@ import cartRouter from "../src/routes/cartsRouter.js";
 //********* Para manejo usando Mongoose  ************ */
 import prodRouterDb from "../src/routes/productsDb.router.js";
 import cartRouterDb from "../src/routes/cartsRouterDb.js";
-import userRouterDb from "../src/routes/usersDb.router.js"
-
+//import userRouterDb from "../src/routes/usersDb.router.js"
+import userRouterDb from "../src/routes/auth.js"
 
 
 // se define el port TCP para el servidor WEB y la conexión a MongoDB
@@ -60,12 +65,15 @@ app.use(cookieParser('clave_cookie_back'));
 app.use(expressSession({
   store: MongoStore.create({
     mongoUrl: 'mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce',
-    ttl: 180
+    ttl: 60*60*24*7
   }),
   secret: 'clave_session_back',
   resave: true,
   saveUninitialized: true
 }));
+inicializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // implementación HandleBars
@@ -100,6 +108,8 @@ app.use(errorHandler);
 app.use(notFoundHandler);
 
 const server = app.listen(PORT,ready);
+
+console.log(process.env.RASTAMAN)
 
 const prodManagerDb = new ProductFunctionsDb();
 const products = await prodManagerDb.getProducts();

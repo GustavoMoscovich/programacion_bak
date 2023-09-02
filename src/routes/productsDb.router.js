@@ -1,13 +1,14 @@
 import { Router } from "express";
 import Productdb from "../models/productdb.js";
 import is_admin from "../middlewares/is_admin.js";
+import verify_jwt_token from "../middlewares/verify_jwt_token.js";
 
 const router = Router();
 
 //CRUD
 
 // crea un nuevo producto en la base de MongoDB
-router.post("/",is_admin , async (req, res, next) => {
+router.post("/",verify_jwt_token, is_admin , async (req, res, next) => {
   try {
     let oneprod = await Productdb.create(req.body);
     return res.status(201).json({
