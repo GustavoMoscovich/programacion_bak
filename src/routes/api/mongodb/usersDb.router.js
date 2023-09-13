@@ -5,10 +5,10 @@
 //
 
 import { Router } from "express";
-import Userdb from "../models/userdb.js";
-import is_form_users_ok from "../middlewares/is_form_users_ok.js";
-import is_8_char from "../middlewares/is_8_char.js";
-import is_valid_user from "../middlewares/is_valid_user.js";
+import Userdb from "../../../models/userdb.js";
+import is_form_users_ok from "../../../middlewares/is_form_users_ok.js";
+import is_8_char from "../../../middlewares/is_8_char.js";
+import is_valid_user from "../../../middlewares/is_valid_user.js";
 
 const router = Router();
 

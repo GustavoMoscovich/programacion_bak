@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import GhStrategy from "passport-github2";
+import jwt from "passport-jwt";
 import User from "../models/userdb.js";
 
 export default function () {
@@ -37,10 +38,10 @@ export default function () {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          console.log('passport.js: ',username)
+          ///console.log('passport.js: ',username)
           let usr = await User.findOne({ email: username });
           if (!usr) {
-            console.log('passport.js login no lo encontró')
+            //console.log('passport.js login no lo encontró')
             return done(null);
           } else {
             return done(null, usr); 
@@ -81,4 +82,33 @@ export default function () {
       }
     )
   );
+
+  passport.use(
+    "jwt",
+    new jwt.Strategy(
+      {
+        jwtFromRequest: jwt.ExtractJwt.fromExtractors([
+          (req) => req?.cookies["token"],
+        ]),
+        secretOrKey: 'T0k3nJWt' // process.env.SECRET_KEY,
+      },
+      async (payload, done) => {
+        try {
+          console.log(payload);
+          let one = await User.findOne({ email: payload.email });
+          if (one) {
+            done(null, one); 
+          } else {
+            done(null);
+          }
+        } catch (error) {
+          done(error);
+        }
+      }
+    )
+  );
+
 }
+
+
+

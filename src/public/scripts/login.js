@@ -1,3 +1,7 @@
+/* 
+
+lo reemplazo para implentar tocken JWT almacenando en cookies
+
 document.getElementById('login').addEventListener('click',(event)=> {
     event.preventDefault()
     const email = document.getElementById('email').value
@@ -13,24 +17,28 @@ document.getElementById('login').addEventListener('click',(event)=> {
             window.location.replace('/')})
         .catch(err=>console.log(err))
 })
+*/
 
+document.getElementById("login").addEventListener("click", (event) => {
+    event.preventDefault();
+    let data = { // objeto para enviar al servidor....
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value,
+    };
+    let config_post = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
 
-/* document.getElementById('loginGitHub').addEventListener('click',(event)=> {
-    event.preventDefault()
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
-    fetch('/api/auth/github',{
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-    })
-        .then(res=>res.json())
-        .then(res=> {
-            alert(res.message)
-            window.location.replace('/')})
-        .catch(err=>console.log(err))
-})
- */
+    fetch("/api/auth/login", config_post)
+      .then((res) => res.json())
+      .then((res) => console.log(res.user))
+      .then((res) => {alert(res.message)
+                     window.location.replace('/')})
+
+      .catch((err) => console.log(err));
+  });
 
 function loginGitHub () {
 
@@ -56,12 +64,13 @@ function loginGitHub () {
 }
 
 function logOut () {
-    fetch('/api/auth/signout',{
-        method: 'POST'
-    })
-        .then(res=>res.json())
-        .then(res=> {
-            alert(res.message)
-            window.location.replace('/')}    )
-        .catch(err=>console.log(err))    
-}
+    let config = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      };
+    
+      fetch("/api/auth/signout", config)
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }

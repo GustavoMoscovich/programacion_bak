@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config.js'
 
 
 import express from "express";
@@ -17,9 +17,9 @@ import passport from 'passport'
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
 import viewcartsDb from "./routes/viewcartsDb.router.js";
-import registerDb from "./routes/registerDb.router.js";
-import newProductDb from "./routes/newProductDb.router.js"
-import loginDb from "./routes/loginDb.router.js";
+import registerDb from "./routes/api/mongodb/registerDb.router.js";
+import newProductDb from "./routes/api/mongodb/newProductDb.router.js"
+import loginDb from "./routes/api/mongodb/loginDb.router.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import notFoundHandler from "../src/middlewares/notFoundHandler.js";
 import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js";
@@ -28,15 +28,15 @@ import sessions_router from "./routes/sessionsRouter.js";
 
 
 //********* Para manejo de datos usando File System  ************ */
-import prodRouter from "../src/routes/products.router.js";
-import cartRouter from "../src/routes/cartsRouter.js";
+import prodRouter from "../src/routes/api/products.router.js";
+import cartRouter from "../src/routes/api/cartsRouter.js";
 
 
 //********* Para manejo usando Mongoose  ************ */
-import prodRouterDb from "../src/routes/productsDb.router.js";
-import cartRouterDb from "../src/routes/cartsRouterDb.js";
+import prodRouterDb from "../src/routes/api/mongodb/productsDb.router.js";
+import cartRouterDb from "../src/routes/api/mongodb/cartsRouterDb.js";
 //import userRouterDb from "../src/routes/usersDb.router.js"
-import userRouterDb from "../src/routes/auth.js"
+import userRouterDb from "../src/routes/api/mongodb/auth.js"
 
 
 // se define el port TCP para el servidor WEB y la conexión a MongoDB
@@ -108,8 +108,9 @@ app.use(errorHandler);
 app.use(notFoundHandler);
 
 const server = app.listen(PORT,ready);
+const pepito = process.env.RASTAMAN
 
-console.log(process.env.RASTAMAN)
+console.log('rastaman... ', pepito)
 
 const prodManagerDb = new ProductFunctionsDb();
 const products = await prodManagerDb.getProducts();

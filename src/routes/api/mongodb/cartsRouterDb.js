@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Cartdb from "../models/cartdb.js";
+import Cartdb from "../../../models/cartdb.js";
 
 const router = Router();
 

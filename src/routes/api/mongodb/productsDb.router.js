@@ -1,7 +1,7 @@
 import { Router } from "express";
-import Productdb from "../models/productdb.js";
-import is_admin from "../middlewares/is_admin.js";
-import verify_jwt_token from "../middlewares/verify_jwt_token.js";
+import Productdb from "../../../models/productdb.js";
+import is_admin from "../../../middlewares/is_admin.js";
+import verify_jwt_token from "../../../middlewares/verify_jwt_token.js";
 
 const router = Router();
 
