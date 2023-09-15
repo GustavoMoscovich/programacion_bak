@@ -17,14 +17,14 @@ import passport from 'passport'
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
 import viewcartsDb from "./routes/viewcartsDb.router.js";
-import registerDb from "./routes/api/mongodb/registerDb.router.js";
-import newProductDb from "./routes/api/mongodb/newProductDb.router.js"
-import loginDb from "./routes/api/mongodb/loginDb.router.js";
+import registerDb from "./routes/registerDb.router.js";
+import newProductDb from "./routes/newProductDb.router.js"
+import loginDb from "./routes/loginDb.router.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import notFoundHandler from "../src/middlewares/notFoundHandler.js";
 import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js";
-import cookieRouter from "./routes/cookiesRouter.js";
-import sessions_router from "./routes/sessionsRouter.js";
+import cookieRouter from "./routes/api/cookiesRouter.js";
+import sessions_router from "./routes/api/sessionsRouter.js";
 
 
 //********* Para manejo de datos usando File System  ************ */

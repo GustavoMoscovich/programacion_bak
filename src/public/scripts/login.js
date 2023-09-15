@@ -33,7 +33,6 @@ document.getElementById("login").addEventListener("click", (event) => {
 
     fetch("/api/auth/login", config_post)
       .then((res) => res.json())
-      .then((res) => console.log(res.user))
       .then((res) => {alert(res.message)
                      window.location.replace('/')})
 
@@ -68,9 +67,10 @@ function logOut () {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       };
-    
       fetch("/api/auth/signout", config)
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then(res=> {
+        alert(res.message)
+        window.location.replace('/')})
       .catch((err) => console.log(err));
   }

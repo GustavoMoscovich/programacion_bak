@@ -38,7 +38,7 @@ export default function () {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          ///console.log('passport.js: ',username)
+          //console.log('passport.js: ',username)
           let usr = await User.findOne({ email: username });
           if (!usr) {
             //console.log('passport.js login no lo encontró')
@@ -64,7 +64,7 @@ export default function () {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log('profile: ',  profile);
+          //console.log('profile: ',  profile);
           let user = await User.findOne({ email: profile._json.login });
           if (user) {
             return done(null, user);
@@ -94,8 +94,8 @@ export default function () {
       },
       async (payload, done) => {
         try {
-          console.log(payload);
-          let one = await User.findOne({ email: payload.email });
+          //console.log('passport jwt: ', payload);
+          let one = await User.findOne({ email: payload.mail });
           if (one) {
             done(null, one); 
           } else {

@@ -87,7 +87,6 @@ router.post(
   create_token, // middleware que obtiene JWT token
   async (req, res, next) => {
     try {
-      //console.log('req: ',req)
       req.session.email = req.body.email;
       req.session.role = req.user.role;
       return res.status(200)
@@ -97,7 +96,6 @@ router.post(
                 })      
                 .json({
                   user: req.user,
-                  //session: req.session,
                   message: 'el usuario ' + req.session.email + ' inició sesión',
                   token: req.session.token
                 });
@@ -107,12 +105,14 @@ router.post(
   }
 );
 
+
+
 router.post(
   "/signout",
   passport.authenticate("jwt"),
   async (req, res, next) => {
     try {
-      console.log(req.session);
+      //console.log(req.session);
       req.session.destroy();
       return res.status(200).clearCookie("token").json({
         success: true,
