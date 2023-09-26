@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import User from "../models/userdb.js";
 import jwt from "jsonwebtoken";
 
 export default (req, res, next) => {
@@ -11,7 +11,9 @@ export default (req, res, next) => {
     });
   }
   const token = auth.token
-  jwt.verify(token, process.env.SECRET_KEY, async (error, credentials) => {
+//  jwt.verify(token, process.env.SECRET_KEY, async (error, credentials) => {
+
+  jwt.verify(token, 'T0k3nJWt', async (error, credentials) => {
     //credentials son los datos DESTOKENIZADOS del token
     try {
       let user = await User.findOne({ email: credentials.email });

@@ -1,3 +1,4 @@
+
 //
 // este Reouter es utilizado para el registro de usuarios y el login usando
 // métodos de hasheo de claves, passport y la utilización de servicios de terceros
@@ -17,11 +18,11 @@ import passport from "passport";
 import create_token from "../../../middlewares/create_token.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
 
+
 export default class AuthRouter extends Router_main {
-    init() {
-        
+    init() {        
         this.post(
-        "/register",
+        "/register",["PUBLIC"],
         is_form_ok,
         is_8_char,
         create_hash,
@@ -41,7 +42,7 @@ export default class AuthRouter extends Router_main {
 
         // login implementando passport y generación de JWT token
         this.post(
-        "/login",
+        "/login",["PUBLIC"],
         is_8_char,
         passport.authenticate("login"),
         is_valid_pass,
@@ -66,55 +67,22 @@ export default class AuthRouter extends Router_main {
         }
         );
 
-router.post(
-  "/signout",
-  passport.authenticate("jwt"),
-  async (req, res, next) => {
-    try {
-      console.log(req.session);
-      req.session.destroy();
-      return res.status(200).clearCookie("token").json({
-        success: true,
-        message: "sesion cerrada",
-        response: req.session,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-/*
-router.post("/signout", async (req, res, next) => {
-  try {
-    req.session.destroy();
-    return res.status(200).json({
-      success: true,
-      message: "sesion cerrada",
-      dataSession: req.session,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-*/
-
-// implementación de validación usando GitHub
-router.get('/github',passport.authenticate('github',{ scope:['user:email']}),(req,res)=>{})
-router.get('/github/callback',passport.authenticate('github',{}),(req,res,next)=>{
-  try {
-    console.log('.....................paso por try github..........................')
-    console.log(req.user)
-
-    req.session.email = req.user.email;
-    req.session.role = req.user.role;
-    return res.status(200).json({
-      success:true,
-      user:req.user
-    })
-  } catch (error) {
-    next(error)
-  }
-})
+        this.post(
+          "/signout",["PUBLIC"],
+          passport.authenticate("jwt"),
+          async (req, res, next) => {
+            try {
+              //console.log(req.session);
+              req.session.destroy();
+              return res.status(200).clearCookie("token").json({
+                success: true,
+                message: "sesion cerrada",
+                response: req.session,
+              });
+            } catch (error) {
+              next(error);
+            }
+          }
+        );
     }
 }

@@ -33,10 +33,20 @@ import cartRouter from "../src/routes/api/cartsRouter.js";
 
 
 //********* Para manejo usando Mongoose  ************ */
-import prodRouterDb from "../src/routes/api/mongodb/productsDb.router.js";
+//import prodRouterDb from "../src/routes/api/mongodb/productsDb.router.js";
 import cartRouterDb from "../src/routes/api/mongodb/cartsRouterDb.js";
 //import userRouterDb from "../src/routes/usersDb.router.js"
-import userRouterDb from "../src/routes/api/mongodb/auth.js"
+//import userRouterDb from "../src/routes/api/mongodb/auth.js"
+
+// implementación de auth usando router como clase
+import AuthRouter from "../src/routes/api/mongodb/auth.router_main.js"
+const authClass = new AuthRouter()
+const userRouterDb = authClass.getRouter()
+
+// implementación de products usando router como clase
+import ProdRouter from "../src/routes/api/mongodb/productsDb.router_main.js"
+const prodClass = new ProdRouter()
+const prodRouterDb = prodClass.getRouter()
 
 
 // se define el port TCP para el servidor WEB y la conexión a MongoDB

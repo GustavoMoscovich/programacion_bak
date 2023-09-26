@@ -25,7 +25,7 @@ export default class Router_main {
     res.sendSuccess = (payload) => res.status(200).json(payload);
     //res.sendNotFound = payload => res.status(payload.status).json(payload.json)
     res.sendNotFound = () =>
-      res.status(404).json({ success: false, response: "not found" });
+      res.status(404).json({ success: false, response: "No Encontrado" });
     res.sendNoAuthenticatedError = (error) =>
       res.status(401).json({ status: "error", error });
     res.sendNoAuthorizatedError = (error) =>
@@ -33,8 +33,9 @@ export default class Router_main {
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
-    //policies es un array con las palabritas que definen las politicas de la empresa
-    //['PUBLIC','ENV','DEV','ADMIN']
+    //definición de un array con funciones/roles que definen las politicas de acceso a las
+    // operaciones/funciones que se brindan con la APP
+    // Funciones/Roles que se definen ['PUBLIC','ENV','DEV','ADMIN']
     if (policies.includes("PUBLIC")) {
       return next();
     } else {
@@ -42,19 +43,18 @@ export default class Router_main {
       if (!authHeaders) {
         return res.sendNoAuthenticatedError("Unauthenticated");
       } else {
-        const tokenArray = authHeaders.split(" "); //Bearer token.token.token ["Bearer","token.token.token"]
+        const tokenArray = authHeaders.split(" "); // tener en cuenta que el formato es Bearer token.token.token ["Bearer","token.token.token"]
         const token = tokenArray[1];
-        const payload = jwt.verify(token, process.env.SECRET_KEY);
+        const payload = jwt.verify(token, 'T0k3nJWt' ); //process.env.SECRET_KEY
         const user = await User.findOne(
-          { mail: payload.mail },
-          "mail age role"
+          { email: payload.mail },
+          "email role"
         );
         const role = user.role;
         if (
           (policies.includes("USER") && role === 0) ||
           (policies.includes("ADMIN") && role === 1) ||
-          (policies.includes("PREM") && role === 2) ||
-          (policies.includes("OLDER") && age >= 21)
+          (policies.includes("PREM") && role === 2)
         ) {
           req.user = user;
           return next();
