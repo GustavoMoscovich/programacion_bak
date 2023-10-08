@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import User from '../models/userdb.js'
+import User from '../dao/mongo/models/userdb.js'
 
 export default async function (req,res,next) {
     //comparo las contraseñas

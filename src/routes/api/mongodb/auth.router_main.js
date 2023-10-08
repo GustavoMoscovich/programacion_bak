@@ -8,7 +8,7 @@
 
 import { Router } from "express";
 import Router_main from "../router_main.js";
-import User from "../../../models/userdb.js";
+import User from "../../../dao/mongo/models/userdb.js";
 import is_form_ok from "../../../middlewares/is_form_users_ok.js";
 import is_8_char from "../../../middlewares/is_8_char.js";
 import create_hash from "../../../middlewares/create_hash.js";

@@ -1,7 +1,7 @@
 //CAPA DE PERSISTENCIA (mongo)
 //es la encargada de realizar el CRUD
 
-import Products from "../../models/productdb.js";
+import Products from "./models/productdb.js";
 
 export default class ProductsMongo {
   constructor() {}

@@ -8,7 +8,8 @@ async function addToCart (elem) {
     if (quantity>0) {
         
         try {
-            let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${elem}/${quantity}`, {
+
+            let response = await fetch(`/api/carts/64f1ecb49a076347728ff9cc/product/${elem}/${quantity}`, {
                 method: 'PUT'
             })
             response = await response.json()

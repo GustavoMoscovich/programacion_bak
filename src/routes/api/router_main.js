@@ -1,6 +1,7 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import User from "../../models/userdb.js";
+import User from "../../dao/mongo/models/userdb.js";
+import config from "../../config/config.js";
 
 export default class Router_main {
   constructor() {
@@ -45,7 +46,7 @@ export default class Router_main {
       } else {
         const tokenArray = authHeaders.split(" "); // tener en cuenta que el formato es Bearer token.token.token ["Bearer","token.token.token"]
         const token = tokenArray[1];
-        const payload = jwt.verify(token, 'T0k3nJWt' ); //process.env.SECRET_KEY
+        const payload = jwt.verify(token, config.SECRET_KEY ); 
         const user = await User.findOne(
           { email: payload.mail },
           "email role"

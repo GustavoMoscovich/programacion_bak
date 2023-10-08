@@ -1,14 +1,15 @@
 // se define la clase ProductFunctionsDb
 // los datos van a persistir en base de datos de MongoDb
 import { connect } from "mongoose";
-import Productdb from "../models/productdb.js";
+import Productdb from "../dao/mongo/models/productdb.js";
+import config from "../config/config.js";
 
 export default class ProductFunctionsDb {
   // método que devuelve el total de productos
   getProducts = async (limit,search,page) => {
     try {
       await connect(
-        "mongodb+srv://gmsisit:1234@gm-sis-it.pmsndu8.mongodb.net/ecommerce"
+        config.LINK_DB
       );
 
       const options = {

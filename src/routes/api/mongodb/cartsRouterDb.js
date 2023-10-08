@@ -18,10 +18,10 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// Obtiene la lista de carritos de la base de MongoDB
+// Obtiene la lista de productos del carrito de un usuario
 router.get("/", async (req, res, next) => {
   try {
-    let allcarts = await Cartdb.find();
+    let allcarts = await Cartdb.find({user_id: '64cc17b302a4e5bd2baa41f6'});
     return res.status(200).json({
       success: true,
       response: allcarts,
@@ -48,46 +48,35 @@ router.put("/:id", async (req, res, next) => {
 
 // modifica un producto dentro del carrito de la base de MongoDB
 // si el producto no existe en el carrito entonces lo agrega al mismo
-router.put("/:cid/product/:pid/:units", async (req, res, next) => {
+router.put("/:uid/product/:pid/:units", async (req, res, next) => {
   try {
-    let { cid } = req.params;
+    let { uid } = req.params;
     let { pid } = req.params;
     let { units } = req.params;
 
-    // busco el producto pid dentro del carrito cid
+    // busco el producto pid  del usuario uid
     let findresult = await Cartdb.find(
-      { $and: [{ _id: cid }, { "products.id": pid }] },
-      { "products.id": 1, "products.quantity": 1, _id: 0 }
+      { $and: [{ user_id: uid }, { product_id: pid }] },
+      { product_id: 1, quantity: 1, _id: 0 }
     ).lean();
 
     if (JSON.stringify(findresult) != "[]") {
-      // el producto existe en el carrito. Entonces le modifico la cantidad.. Pero tengo que leer todos los productos del carrito
-      // para hacer la actualización y mantener todos los productos
-      const upd_products = findresult[0].products.map((obj) => {
-        obj.id = obj.id.toString();
-        if (obj.id == pid) {
-          obj.quantity = Number(units);
-        }
-        return obj;
-      });
-      let data = JSON.parse(
-        '{ "products": ' + JSON.stringify(upd_products) + " }"
-      );
-      let onecart = await Cartdb.findByIdAndUpdate(cid, data);
+
+      // el producto existe en el carrito. Entonces le modifico la cantidad.. 
+      let data = JSON.parse(`{ "quantity": ${Number(units)} }`);
+      let onecart = await Cartdb.findOneAndUpdate({ $and: [{ user_id: uid }, { product_id: pid }] }, data);
       return res.status(200).json({
         success: true,
-        message: `el producto con ID ${pid} fue modificado en el carrito`,
+        message: `el producto fue modificado en el carrito`,
       });
     } else {
-      // el producto NO existe en el carrito, entonces lo doy de alta en el mismo
+      // el producto NO existe en el carrito, entonces lo doy de alta
 
-      let data = JSON.parse(`{ "id": "${pid}", "quantity": ${Number(units)} }`);
-      let onecart = await Cartdb.findByIdAndUpdate(cid, {
-        $push: { products: data },
-      });
+      let data = JSON.parse(`{ "product_id": "${pid}", "quantity": ${Number(units)}, "user_id": "${uid}" }`);
+      let onecart = await Cartdb.create(data);
       return res.status(200).json({
         success: true,
-        message: `el producto con ID ${pid} fue agregado en el carrito`,
+        message: `el producto ID ${pid} fue agregado en el carrito`,
       });
     }
   } catch (error) {
