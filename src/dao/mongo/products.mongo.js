@@ -4,9 +4,9 @@
 import Products from "./models/productdb.js";
 
 export default class ProductsMongo {
-  constructor() {}
+  constructor() { }
   async createModel(data) {
-    console.log("Create Capa Persistencia")
+
     let one = await Products.create(data);
     return {
       message: "Producto Creado!",

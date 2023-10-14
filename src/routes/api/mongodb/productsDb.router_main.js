@@ -3,7 +3,6 @@
 import { Router } from "express";
 import Router_main from "../router_main.js";
 import ProductsController from "../../../controllers/products.controller.js";
-//import Productdb from "../../../models/productdb.js";
 import is_admin from "../../../middlewares/is_admin.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
 

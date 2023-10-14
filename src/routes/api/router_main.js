@@ -2,6 +2,9 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import User from "../../dao/mongo/models/userdb.js";
 import config from "../../config/config.js";
+import My_errors from "../../config/My_errors.js";
+import errors from "../../config/errors.js";
+
 
 export default class Router_main {
   constructor() {
@@ -11,7 +14,7 @@ export default class Router_main {
   getRouter() {
     return this.router;
   }
-  init() {}
+  init() { }
   applyCb(cbs) {
     return cbs.map((cb) => async (...params) => {
       try {
@@ -24,13 +27,11 @@ export default class Router_main {
   responses = (req, res, next) => {
     res.sendSuccessCreate = (payload) => res.status(201).json(payload);
     res.sendSuccess = (payload) => res.status(200).json(payload);
-    //res.sendNotFound = payload => res.status(payload.status).json(payload.json)
-    res.sendNotFound = () =>
-      res.status(404).json({ success: false, response: "No Encontrado" });
-    res.sendNoAuthenticatedError = (error) =>
-      res.status(401).json({ status: "error", error });
-    res.sendNoAuthorizatedError = (error) =>
-      res.status(403).json({ status: "error", error });
+    res.sendFailed = () => My_errors.newError(errors.failed);
+    res.sendNotFound = () => My_errors.newError(errors.notFound);
+    res.sendNoAuthenticatedError = () => My_errors.newError(errors.auth);
+    res.sendNoAuthorizatedError = () => My_errors.newError(errors.forbidden);
+    res.sendInvalidCred = () => My_errors.newError(errors.credentials);
     return next();
   };
   handlePolicies = (policies) => async (req, res, next) => {
@@ -42,11 +43,11 @@ export default class Router_main {
     } else {
       const authHeaders = req.headers.authorization;
       if (!authHeaders) {
-        return res.sendNoAuthenticatedError("Unauthenticated");
+        return res.sendNoAuthenticatedError();
       } else {
         const tokenArray = authHeaders.split(" "); // tener en cuenta que el formato es Bearer token.token.token ["Bearer","token.token.token"]
         const token = tokenArray[1];
-        const payload = jwt.verify(token, config.SECRET_KEY ); 
+        const payload = jwt.verify(token, config.SECRET_KEY);
         const user = await User.findOne(
           { email: payload.mail },
           "email role"
@@ -60,7 +61,7 @@ export default class Router_main {
           req.user = user;
           return next();
         } else {
-          return res.sendNoAuthorizatedError("Unauthorized");
+          return res.sendNoAuthorizatedError();
         }
       }
     }

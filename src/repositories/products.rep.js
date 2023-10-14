@@ -5,8 +5,8 @@ export default class ProdsRepository {
   constructor() {
     this.model = new Prod();
   }
-  createModel = (data) => this.model.create(data);
-  readModels = (id) => this.model.read(id);
-  updateModel = (id, data) => this.model.update(id, data);
-  destroyModel = (id) => this.model.destroy(id);
+  createModel = (data) => this.model.createModel(data);
+  readModels = (id) => this.model.readModels(id);
+  updateModel = (id, data) => this.model.updateModel(id, data);
+  destroyModel = (id) => this.model.destroyModel(id);
 }

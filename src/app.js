@@ -1,6 +1,5 @@
 import 'dotenv/config.js'
 
-
 import express from "express";
 import handlebars from "express-handlebars";
 import { Server } from "socket.io";
@@ -12,8 +11,8 @@ import expressSession from 'express-session';
 import MongoStore from "connect-mongo";
 import inicializePassport from './middlewares/passport.js'
 import passport from 'passport'
+import commpression from "express-compression"
 
-//
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
 import viewcartsDb from "./routes/viewcartsDb.router.js";
@@ -25,6 +24,7 @@ import notFoundHandler from "../src/middlewares/notFoundHandler.js";
 import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js";
 import cookieRouter from "./routes/api/cookiesRouter.js";
 import sessions_router from "./routes/api/sessionsRouter.js";
+import productsMocks from "./dao/datamocks/products.mocks.js"
 
 // implementación de auth usando router como clase
 import AuthRouter from "../src/routes/api/mongodb/auth.router_main.js"
@@ -46,11 +46,11 @@ const cartRouterDb = cartClass.getRouter()
 
 const PORT = config.PORT_WEB // define el puerto TCP para el servidor web
 
-const ready = ()=> {
-  console.log('servidor web activo en puerto '+PORT)
+const ready = () => {
+  console.log('servidor web activo en puerto ' + PORT)
   connect(config.LINK_DB)
-    .then(()=>console.log('Conexión a Base de datos OK...'))
-    .catch(err=>console.log(err))
+    .then(() => console.log('Conexión a Base de datos OK...'))
+    .catch(err => console.log(err))
 }
 
 const app = express();
@@ -60,11 +60,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
 
 // middlewares
+app.use(commpression({
+  brotli: { enable: true, zlib: {} },
+}));
 app.use(cookieParser(config.SECRET_COOKIE));
 app.use(expressSession({
   store: MongoStore.create({
     mongoUrl: config.LINK_DB,
-    ttl: 60*60*24*7
+    ttl: 60 * 60 * 24 * 7
   }),
   secret: config.SECRET_SESSION,
   resave: true,
@@ -97,27 +100,9 @@ app.use("/api/carts", cartRouterDb); // se configura para que trabaje con el Rou
 app.use("/api/auth", userRouterDb);
 app.use("/api/cookies", cookieRouter);
 app.use("/api/sessions", sessions_router);
-
+app.use("/api/mockingproducts", productsMocks);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
 
-/* const PORT = config.PORT_WEB
-
-const ready = ()=> {
-  console.log('servidor web activo en puerto '+PORT)
-} */
-const server = app.listen(PORT,ready);
-
-/* 
-const prodManagerDb = new ProductFunctionsDb();
-const products = await prodManagerDb.getProducts();
-
-// implementación de Websockets
-const io = new Server(server);
-
-io.on("connection", (socket) => {
-  console.log("equipo conectado");
-  socket.emit("listOfProducts",   products  );
-});
- */
+const server = app.listen(PORT, ready);
