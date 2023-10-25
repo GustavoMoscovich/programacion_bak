@@ -1,0 +1,3 @@
+[33mERROR[39m: POST /api/cartsxx - 12:02:08 - not found path
+[31mFATAL[39m: GET /api/products/64da5590c82 - 20:42:06 - Cast to ObjectId failed for value "64da5590c82" (type string) at path "_id" for model "products"
+[31mFATAL[39m: GET /api/products/64da5590c82d7123da3f08a0 - 20:43:36 - undefined

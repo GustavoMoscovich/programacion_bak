@@ -7,12 +7,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ./src/app.js",
+    "test-simple": "artillery quick --count 40 --num 50 'http://localhost:8080/api/simple' -o ./src/tests/performance/testSimple.json ",
+    "test-advance": "artillery run ./src/tests/performance/advance.yaml --output ./src/tests/performance/testAdvance.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "artillery-plugin-metrics-by-endpoint": "^1.2.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "commander": "^11.0.0",
@@ -36,7 +39,8 @@
     "passport-local": "^1.0.0",
     "session-file-store": "^1.5.0",
     "socket.io": "^4.7.1",
-    "twilio": "^4.18.0"
+    "twilio": "^4.18.0",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",

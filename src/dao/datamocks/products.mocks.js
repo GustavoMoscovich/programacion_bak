@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 
   try {
     let prodRepo = new ProdsRepository();
-    for (let i = 0; i < 99; i++) {
+    for (let i = 0; i < 1; i++) {
       let data = product();
       await prodRepo.createModel(data);
     }

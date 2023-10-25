@@ -1,0 +1,16 @@
+config:
+  pluggins:
+    metrics-by-endpoint: {}
+  target: http://localhost:8080/api
+  phases:
+    - duration: 30
+      arrivalRate: 30
+scenarios:
+  - name: create, get & destroy one product
+    flow:
+      - log: "create product"
+      - post:
+          url: /mockingproducts
+          capture:
+            - json: "$.response"
+              as: "pid"

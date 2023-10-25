@@ -12,6 +12,7 @@ import MongoStore from "connect-mongo";
 import inicializePassport from './middlewares/passport.js'
 import passport from 'passport'
 import commpression from "express-compression"
+import winston from './middlewares/winston.js';
 
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
@@ -25,6 +26,8 @@ import ProductFunctionsDb from "../src/functions/ProductFunctionsDb.js";
 import cookieRouter from "./routes/api/cookiesRouter.js";
 import sessions_router from "./routes/api/sessionsRouter.js";
 import productsMocks from "./dao/datamocks/products.mocks.js"
+import simpleRouter from "../src/routes/api/simple.router.js"
+import complexRouter from "../src/routes/api/complex.router.js"
 
 // implementación de auth usando router como clase
 import AuthRouter from "../src/routes/api/mongodb/auth.router_main.js"
@@ -77,6 +80,7 @@ inicializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(winston);
 
 // implementación HandleBars
 app.engine("handlebars", handlebars.engine());
@@ -101,6 +105,8 @@ app.use("/api/auth", userRouterDb);
 app.use("/api/cookies", cookieRouter);
 app.use("/api/sessions", sessions_router);
 app.use("/api/mockingproducts", productsMocks);
+app.use("/api/simple",simpleRouter);
+app.use("/api/complex",complexRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
