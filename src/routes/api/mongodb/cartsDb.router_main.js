@@ -26,10 +26,11 @@ export default class CartRouter extends Router_main {
         });
 
         // Obtiene la lista de productos del carrito
+
         this.read("/", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
             try {
 
-                console.log('cart capa router req',req.user._id)
+                console.log('READ... cart capa router req',req.user._id)
                 let user_id=req.user._id
                 let response = await Ca_Controller.read(user_id);
                 if (response) {
@@ -41,6 +42,11 @@ export default class CartRouter extends Router_main {
                 next(error);
             }
         });
+
+
+
+
+
 
         this.put("/:id", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
             try {

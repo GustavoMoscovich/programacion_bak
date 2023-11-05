@@ -68,7 +68,7 @@ export default class ProdRouter extends Router_main {
             }
         });
 
-        this.delete("/:id", ["ADMIN"], verify_jwt_token_cookie, is_admin, async (req, res, next) => {
+        this.delete("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_admin, async (req, res, next) => {
             try {
                 let { id } = req.params;
                 let response = await ProdsController.destroyController(id);

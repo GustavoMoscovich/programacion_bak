@@ -84,6 +84,15 @@ export default class Router_main {
       this.applyCb(cbs)
     );
   }
+   //get
+   get(path, policies, ...cbs) {
+    this.router.get(
+      path,
+      this.responses,
+      this.handlePolicies(policies),
+      this.applyCb(cbs)
+    );
+  }
   //update
   put(path, policies, ...cbs) {
     this.router.put(

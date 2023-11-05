@@ -91,6 +91,8 @@ app.set("view engine", "handlebars");
 app.use("/", viewproductsRouterDb);
 //Carrito
 app.use("/cart", viewcartsDb);
+//app.use("/cart/carthtml", cartRouterDb);
+
 //Registro de usuarios
 app.use("/register", registerDb);
 //Registro de nuevos productos

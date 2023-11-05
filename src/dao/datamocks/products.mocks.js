@@ -25,12 +25,15 @@ router.post("/", async (req, res) => {
     let prodRepo = new ProdsRepository();
     for (let i = 0; i < 1; i++) {
       let data = product();
-      await prodRepo.createModel(data);
+      response =  await  prodRepo.createModel(data);
     }
+
+   
     return res.status(201).json({
       success: true,
       message: `se han registrado los productos`,
     });
+ 
   } catch (error) { }
 })
 

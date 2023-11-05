@@ -5,8 +5,11 @@ async function modprodcart(pid,elem) {
     let quantity = selector.value
 
     try {
-        let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}/${quantity}`, {
-            method: 'PUT'
+        //let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}/${quantity}`, {
+        let response = await fetch(`/api/carts/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: `{ "product_id": "${pid}", "quantity": ${quantity} }`
         })
         response = await response.json()
         if (response.status===200) {

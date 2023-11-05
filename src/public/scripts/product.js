@@ -9,8 +9,12 @@ async function addToCart (elem) {
         
         try {
 
-            let response = await fetch(`/api/carts/64f1ecb49a076347728ff9cc/product/${elem}/${quantity}`, {
-                method: 'PUT'
+            //let response = await fetch(`/api/carts/64f1ecb49a076347728ff9cc/product/${elem}/${quantity}`, {
+            let response = await fetch(`/api/carts/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: `{ "product_id": "${elem}", "quantity": ${quantity} }`
+    
             })
             response = await response.json()
             if (response.status===200) {

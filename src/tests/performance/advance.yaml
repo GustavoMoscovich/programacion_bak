@@ -3,8 +3,8 @@ config:
     metrics-by-endpoint: {}
   target: http://localhost:8080/api
   phases:
-    - duration: 30
-      arrivalRate: 30
+    - duration: 5
+      arrivalRate: 5
 scenarios:
   - name: create, get & destroy one product
     flow:

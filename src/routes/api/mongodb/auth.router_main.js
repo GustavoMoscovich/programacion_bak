@@ -14,75 +14,112 @@ import is_8_char from "../../../middlewares/is_8_char.js";
 import create_hash from "../../../middlewares/create_hash.js";
 import is_valid_user from "../../../middlewares/is_valid_user.js";
 import is_valid_pass from "../../../middlewares/is_valid_pass.js";
+import is_admin from "../../../middlewares/is_admin.js"
 import passport from "passport";
 import create_token from "../../../middlewares/create_token.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
 
 
 export default class AuthRouter extends Router_main {
-    init() {        
-        this.post(
-        "/register",["PUBLIC"],
-        is_form_ok,
-        is_8_char,
-        create_hash,
-        passport.authenticate("register"),
-        async (req, res, next) => {
-            try {
-            return res.sendSuccessCreate({
-                success: true,
-                response: "Se ha creado el usuario asignando el ID "+req.user._id,
-                message: "Se ha creado el usuario asignando el ID "+req.user._id,
+  init() {
+    this.post(
+      "/register", ["PUBLIC"],
+      is_form_ok,
+      is_8_char,
+      create_hash,
+      passport.authenticate("register"),
+      async (req, res, next) => {
+        try {
+          return res.sendSuccessCreate({
+            success: true,
+            response: "Se ha creado el usuario asignando el ID " + req.user._id,
+            message: "Se ha creado el usuario asignando el ID " + req.user._id,
+          });
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
+
+    // login implementando passport y generación de JWT token
+    this.post(
+      "/login", ["PUBLIC"],
+      is_8_char,
+      passport.authenticate("login"),
+      is_valid_pass,
+      create_token, // middleware que obtiene JWT token
+      async (req, res, next) => {
+        try {
+          req.session.email = req.body.email;
+          req.session.role = req.user.role;
+          return res.status(200)
+            .cookie("token", req.session.token, {
+              maxAge: 60 * 60 * 24 * 7 * 1000,
+              httpOnly: false,
+            })
+            .json({
+              user: req.user,
+              message: 'el usuario ' + req.session.email + ' inició sesión',
+              token: req.session.token
             });
-            } catch (error) {
-            next(error);
-            }
+        } catch (error) {
+          next(error);
         }
-        );
+      }
+    );
 
-        // login implementando passport y generación de JWT token
-        this.post(
-        "/login",["PUBLIC"],
-        is_8_char,
-        passport.authenticate("login"),
-        is_valid_pass,
-        create_token, // middleware que obtiene JWT token
-        async (req, res, next) => {
-            try {
-            req.session.email = req.body.email;
-            req.session.role = req.user.role;
-            return res.status(200)
-                        .cookie("token", req.session.token, {
-                        maxAge: 60 * 60 * 24 * 7 * 1000,
-                        httpOnly: false,
-                        })      
-                        .json({
-                        user: req.user,
-                        message: 'el usuario ' + req.session.email + ' inició sesión',
-                        token: req.session.token
-                        });
-            } catch (error) {
-            next(error);
-            }
+    this.post(
+      "/signout", ["PUBLIC"],
+      passport.authenticate("jwt"),
+      async (req, res, next) => {
+        try {
+          //console.log(req.session);
+          req.session.destroy();
+          return res.status(200).clearCookie("token").json({
+            success: true,
+            message: "sesion cerrada",
+            response: req.session,
+          });
+        } catch (error) {
+          next(error);
         }
-        );
+      }
+    );
 
-        this.post(
-          "/signout",["PUBLIC"],
-          passport.authenticate("jwt"),
-          async (req, res, next) => {
-            try {
-              //console.log(req.session);
-              req.session.destroy();
-              return res.status(200).clearCookie("token").json({
-                success: true,
-                message: "sesion cerrada",
-                response: req.session,
-              });
-            } catch (error) {
-              next(error);
+    this.post(
+      "/premium/:user", ["PUBLIC"],
+      passport.authenticate("jwt"),
+      async (req, res, next) => {
+        try {
+          let { user } = req.params;
+          let oneuser = await User.findOne({ email: user })
+          if (oneuser) {
+            if (oneuser.role == 0) { // es un usuario comun lo promuevo a PREMIUM - role=2
+              let usrmodif = await User.updateOne({ email: user }, { $set: { role: 2 } })
+            } else { // vuelve a convertir al usuario de PREMIUN a común - role=0
+              let usrmodif = await User.updateOne({ email: user }, { $set: { role: 0 } })
             }
+            return res.sendSuccess({
+              success: true,
+              response: "Se ha modificado el tipo de usuario",
+              message: "Se ha modificado el tipo de usuario",
+            });
+
+          } else { // el mail enviado no existe como usuario
+            return res.sendSuccess({
+              success: false,
+              response: "El mail enviado no corresponde a un usuario",
+              message: "El mail enviado no corresponde a un usuario",
+            });
+
           }
-        );
-    }
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
+
+  }
+
+
 }

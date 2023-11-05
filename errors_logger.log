@@ -1,3 +1,29 @@
 [33mERROR[39m: POST /api/cartsxx - 12:02:08 - not found path
 [31mFATAL[39m: GET /api/products/64da5590c82 - 20:42:06 - Cast to ObjectId failed for value "64da5590c82" (type string) at path "_id" for model "products"
 [31mFATAL[39m: GET /api/products/64da5590c82d7123da3f08a0 - 20:43:36 - undefined
+[33mERROR[39m: GET /favicon.ico - 13:14:06 - not found path
+[33mERROR[39m: PUT /api/carts/64f1ecb49a076347728ff9cc/product/65345f2b55f2bac5edee952d/1 - 13:14:58 - not found path
+[33mERROR[39m: GET /favicon.ico - 15:53:08 - not found path
+[33mERROR[39m: PUT /api/carts/64f1ecb49a076347728ff9cc/product/65345f1655f2bac5edee902d/1 - 15:54:08 - not found path
+[33mERROR[39m: PUT /api/carts/64f1ecb49a076347728ff9cc/product/65345f1555f2bac5edee900b/1 - 16:13:26 - not found path
+[33mERROR[39m: PUT /api/carts/ - 16:17:26 - not found path
+[33mERROR[39m: GET /favicon.ico - 20:22:35 - not found path
+[33mERROR[39m: GET /favicon.ico - 21:25:23 - not found path
+[33mERROR[39m: GET /favicon.ico - 20:58:46 - not found path
+[33mERROR[39m: GET /api/cart - 20:59:51 - not found path
+[33mERROR[39m: GET /favicon.ico - 13:14:48 - not found path
+[33mERROR[39m: GET /favicon.ico - 08:52:23 - not found path
+[33mERROR[39m: GET /favicon.ico - 09:02:48 - not found path
+[33mERROR[39m: GET /cart/carthtml - 09:03:08 - not found path
+[33mERROR[39m: GET /cart/carthtml - 09:10:39 - not found path
+[33mERROR[39m: GET /api/cart/carthtml - 09:11:08 - not found path
+[33mERROR[39m: GET /api/carthtml - 09:11:29 - not found path
+[33mERROR[39m: GET /carthtml - 09:11:41 - not found path
+[33mERROR[39m: GET /favicon.ico - 20:07:44 - not found path
+[33mERROR[39m: GET /cart/carthtml - 20:08:02 - not found path
+[33mERROR[39m: GET /favicon.ico - 14:28:50 - not found path
+[33mERROR[39m: GET /favicon.ico - 11:58:34 - not found path
+[33mERROR[39m: GET /favicon.ico - 12:50:20 - not found path
+[33mERROR[39m: DELETE /api/carts/64cc17b302a4e5bd2baa41f6/product/65345f1855f2bac5edee908d - 12:52:13 - not found path
+[31mFATAL[39m: POST /api/auth/premium/gm.it@gmail.com - 17:26:45 - User.update is not a function
+[31mFATAL[39m: POST /api/auth/premium/gm.it@gmail.com - 17:27:35 - User.update is not a function

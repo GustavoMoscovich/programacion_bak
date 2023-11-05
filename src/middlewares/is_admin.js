@@ -1,14 +1,15 @@
 export default function (req,res,next) {
     try {
-        if (req.session.role===1)  {   // los usuarios con role = 1 son administradores y solo ellos pueden crear productos
+ 
+        if (req.session.role===1)  {   // los usuarios con role = 1 son administradores 
             next()
         } else {
             return res.status(403).json({
                 status: 403,
                 method: req.method,
                 path: req.url,
-                response: 'Usuario no autorizado para la creación de Productos',
-                message: 'Usuario no autorizado para la creación de Productos'
+                response: 'Usuario no autorizado ',
+                message: 'Usuario no autorizado '
             })
         }
     } catch (error) {
