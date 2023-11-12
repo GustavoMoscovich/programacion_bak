@@ -14,13 +14,10 @@ export default (req, res, next) => {
   }
   const token = auth.token
 
-  console.log("paso por jwt: ",config.SECRET_KEY)
   jwt.verify(token, config.SECRET_KEY, async (error, credentials) => {
     //credentials son los datos DESTOKENIZADOS del token
     try {
       let user = await User.findOne({ email: credentials.mail });
-      console.log("USER DENTRO DE JWT: ",user)
-      
       req.user = user;
       return next();
     } catch (error) {

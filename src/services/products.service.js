@@ -15,8 +15,8 @@ export default class ProductsService {
     let response = this.model.createModel(data);
     return response;
   }
-  readService() {
-    let response = this.model.readModels();
+  readService(limit, page) {
+    let response = this.model.readModels(limit, page);
     return response;
   }
   readOneService(id) {

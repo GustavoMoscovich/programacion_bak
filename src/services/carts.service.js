@@ -22,12 +22,12 @@ export default class CartsService {
       return response;
     }
 
-    update(id, data) {
-      let response = this.model.update(id, data);
+    update(user_id,pid,qty) {
+      let response = this.model.update(user_id,pid,qty);
       return response;
     }
-    destroy(id) {
-      let response = this.model.destroy(id);
+    destroy(user_id,pid) {
+      let response = this.model.destroy(user_id,pid);
       return response;
     }
   }

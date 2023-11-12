@@ -1,0 +1,343 @@
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        title:
+          description: Nombre del Producto
+          type: string
+        description:
+          description: Descripción extendida del Producto
+          type: string
+        code:
+          description: Código del Producto
+          type: string
+        price:
+          description: Precio de Venta del Producto
+          type: number
+        status:
+          description: Especifica si el Producto está Activo o Desactivado
+          type: boolean
+        stock:
+          description: Stock del Producto
+          type: number
+        category:
+          description: Categoría a la que pertenece el Producto
+          type: string
+        thumbnails:
+          description: Imágenes del Producto
+          type: array          
+      example:
+        title : COLMI 22G BLACK
+        description : Smartwatch muy completo con varias funciones para monitoreo de estado de salud
+        code : CO5565BL
+        price : 36700
+        status : true
+        stock : 125
+        category : SMARTWATCH
+  responses:
+    create:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: ID del Producto Creado
+      example:
+        status: success
+        payload:
+          message: Producto Creado!
+          product_id: 6541aae1e7b2683607f2b4df
+    read:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Devuelve los productos de la base de datos
+      example:
+        status: success
+        payload:
+          - title : COLMI 22G BLACK
+            description : Smartwatch muy completo con varias funciones para monitoreo de estado de salud
+            code : CO5565BL
+            price : 36700
+            status : true
+            stock : 125
+            category : SMARTWATCH
+          - title : TISSOT GP
+            description : Relój metálico edición especial del MotoGP
+            code : TS4584GR
+            price : 156200
+            status : true
+            stock : 10
+            category : RELOJES
+    update:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: Mensaje sobre la acción realizada
+      example:
+          status: success
+          message: Producto Modificado!
+          payload:
+            _id: "654e29a0570e1f63785da727"
+            title: Secador Gamma
+            description: Secador de pelo de valocidad variable frio y calor
+            code: GAM2514DD
+            price: 351
+            status: true
+            stock: 20
+            category: BEAUTY
+    auth:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: auth
+        from: POST /api/auth/signout middleware
+        message: Invalid credentials
+    forbidden:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: forbidden
+        from: POST /api/auth/signout middleware
+        message: Not Allowed
+    incomplete:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: error
+        from: POST /api/auth/register middleware
+        message: Incomplete values
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: error
+        from: controller
+        message: No se encontró el Producto
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        from: error handler
+        message: El valor no está definido
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+paths:
+  /api/products:
+    post:
+      summary: Agregar un nuevo Producto
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Products'
+      responses:
+        "201":
+          description: Éxito en el alta del nuevo Producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/create'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "500":
+          description: Falla del servidor al crear una mascota
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/products/{limit}/{page}:
+    get:
+      summary: Leer los Productos de la base
+      tags:
+        - Product
+      parameters:
+        - name: page
+          in: path
+          type: integer
+          description: Numero de página a mostrar
+        - name: limit
+          in: path
+          type: integer
+          description: Numero de Productos a mostrar por página
+      responses:
+        "200":
+          description: Éxito en la lectura de Productos
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/read'
+        "404":
+          description: Producto/s no encontrado/s
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al leer los Productos
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/products/{pid}:
+    put:
+      summary: Actualizar los datos de un Producto
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a modificar
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Products'
+      responses:
+        "200":
+          description: Éxito al actualizar un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/update'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Producto/s no encontrado/s
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al actualizar un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+    delete:
+      summary: Eliminar un producto de la base
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a eliminar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Producto Eliminado con Éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/update'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al eliminar un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'

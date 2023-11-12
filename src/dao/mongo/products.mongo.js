@@ -13,9 +13,15 @@ export default class ProductsMongo {
       response: { product_id: one._id },
     };
   }
-  async readModels() {
-    let all = await Products.find();
-    if (all.length > 0) {
+  async readModels(limit, page) {
+    const options = {
+      page: page,
+      limit: limit,
+      select: '_id title code price status stock category thumbnails'
+    }
+    let all = await Products.paginate({},options)
+    //let all = await Products.find(limit, page);
+    if (all.docs.length > 0) {
       return {
         message: "Productos Encontrados!",
         response: { products: all },

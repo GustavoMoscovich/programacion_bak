@@ -13,6 +13,8 @@ import inicializePassport from './middlewares/passport.js'
 import passport from 'passport'
 import commpression from "express-compression"
 import winston from './middlewares/winston.js';
+import swaggerJSDoc from "swagger-jsdoc";
+import { serve,setup } from "swagger-ui-express"
 
 import viewproductsRouter from "./routes/viewproducts.router.js";
 import viewproductsRouterDb from "./routes/viewproductsDb.router.js";
@@ -28,6 +30,10 @@ import sessions_router from "./routes/api/sessionsRouter.js";
 import productsMocks from "./dao/datamocks/products.mocks.js"
 import simpleRouter from "../src/routes/api/simple.router.js"
 import complexRouter from "../src/routes/api/complex.router.js"
+
+// Swagger
+import options from "./config/swagger.js";
+const specs = swaggerJSDoc(options)
 
 // implementación de auth usando router como clase
 import AuthRouter from "../src/routes/api/mongodb/auth.router_main.js"
@@ -109,6 +115,7 @@ app.use("/api/sessions", sessions_router);
 app.use("/api/mockingproducts", productsMocks);
 app.use("/api/simple",simpleRouter);
 app.use("/api/complex",complexRouter);
+app.use("/api/docs", serve, setup(specs))
 
 app.use(errorHandler);
 app.use(notFoundHandler);

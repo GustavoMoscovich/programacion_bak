@@ -1,0 +1,363 @@
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        product_id:
+          description: ID del Producto
+          type: _id
+        quantity:
+          description: Cantidad del Producto
+          type: number
+        user_id:
+          description: ID del Usuario dueño del carrito
+          type: _id
+        price:
+          description: Precio de Venta del Producto
+          type: number
+      example:
+        product_id: 64da5590c82d7123da3f08a9
+        quantity: 4
+        user_id: 64f12c5735877c3b0f0864ce
+        price: 8300
+  responses:
+    create:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: ID del Regitro Agregado al Carrito
+      example:
+        status: success
+        payload:
+          message: Producto Agregado al Carrito
+          cart_id: 654ef5fa5c09dbbdb6d64d93
+    readcarts:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Devuelve los productos del carrito
+      example:
+        status: success
+        message: Producto Encontrado..!
+        payload:
+          - _id: 653eb058d4207a2e97c91488
+            product_id:
+              _id: 65345f1855f2bac5edee908d
+              title: Bacon
+              code: 0-279-36336-2
+              price: 91245
+              status: true
+              stock: 64
+              category: Games
+              thumbnails:
+                - https://loremflickr.com/640/480?lock=6517579854118912
+              __v: 0
+            quantity: 1
+            user_id:
+              _id: 6501f8d590cc9a68491148d2
+              email: raquel@mio.com
+            price: 80
+          - _id: 654512638db4695129770353
+            product_id:
+              _id: 65345f1a55f2bac5edee9111
+              title: Rastam
+              code: 1-4569-3883-5
+              price: 125410
+              status: true
+              stock: 30
+              category: Games
+              thumbnails:
+                - https://loremflickr.com/640/480?lock=2000520912830464
+              __v: 0
+            quantity: 1
+            user_id:
+              _id: 6501f8d590cc9a68491148d2
+              email: raquel@mio.com
+            price: 80
+    updatecarts:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: Mensaje sobre la acción realizada
+      example:
+          status: success
+          message: Producto Modificado en Carrito
+          payload:
+            _id: "654e29a0570e1f63785da727"
+            product_id: "65345f1555f2bac5edee8fe7"
+            quantity: 10
+            user_id: "6501f8d590cc9a68491148d2"
+            price: 80
+            __v: 0
+    deletecarts:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: Mensaje sobre la acción realizada
+      example:
+          status: success
+          message: Productos del carrito borrados
+          payload:
+            _id: "654e29a0570e1f63785da727"
+            product_id: "65345f1555f2bac5edee8fe7"
+            quantity: 10
+            user_id: "6501f8d590cc9a68491148d2"
+            price: 80
+            __v: 0
+    auth:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: auth
+        from: POST /api/auth/signout middleware
+        message: Invalid credentials
+    forbidden:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: forbidden
+        from: POST /api/auth/signout middleware
+        message: Not Allowed
+    incomplete:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: error
+        from: POST /api/auth/register middleware
+        message: Incomplete values
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: error
+        from: controller
+        message: No se encontró el Producto
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        from: error handler
+        message: El valor no está definido
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+paths:
+  /api/cart:
+    post:
+      summary: Agregar un nuevo Producto al Carrito
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Carts'
+      responses:
+        "201":
+          description: Éxito en el alta del nuevo Producto al Carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/create'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "500":
+          description: Falla del servidor al crear una producto en el carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/cart/{uid}:
+    get:
+      summary: Leer los Productos del carrito del usuario logeado
+      tags:
+        - Cart
+      parameters:
+        - name: uid
+          in: path
+          type: string
+          description: ID de usuario dueño del carrito
+      responses:
+        "200":
+          description: Éxito en la lectura de Productos del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/readcarts'
+        "404":
+          description: Producto/s no encontrado/s en el carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al leer los Productos del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/cart/{pid}/{qty}:
+    put:
+      summary: Actualizar la cantidad de un Producto del carrito
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a modificar
+          schema:
+            $type: string
+        - name: qty
+          in: path
+          required: true
+          description: Cantidad a reemplazar
+          schema:
+            $type: number
+      responses:
+        "200":
+          description: Éxito al actualizar el producto en el carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/updatecarts'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Producto/s no encontrado/s
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al actualizar un producto del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/cart/{pid}:
+    delete:
+      summary: Eliminar un producto del carrito
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a eliminar del carrito
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Producto en Carrito Eliminado con Éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/deletecarts'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Producto no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al eliminar un producto del carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'

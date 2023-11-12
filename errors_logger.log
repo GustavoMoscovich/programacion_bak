@@ -27,3 +27,13 @@
 [33mERROR[39m: DELETE /api/carts/64cc17b302a4e5bd2baa41f6/product/65345f1855f2bac5edee908d - 12:52:13 - not found path
 [31mFATAL[39m: POST /api/auth/premium/gm.it@gmail.com - 17:26:45 - User.update is not a function
 [31mFATAL[39m: POST /api/auth/premium/gm.it@gmail.com - 17:27:35 - User.update is not a function
+[33mERROR[39m: GET /favicon.ico - 10:14:38 - not found path
+[31mFATAL[39m: GET /api/products - 23:32:17 - undefined
+[31mFATAL[39m: GET /api/products - 23:34:25 - undefined
+[31mFATAL[39m: GET /api/products - 23:39:58 - undefined
+[33mERROR[39m: GET /api/products/3/1 - 23:42:30 - not found path
+[33mERROR[39m: GET /api/products/3/1 - 23:43:11 - not found path
+[33mERROR[39m: GET /api/products?page=2&limit=2 - 23:58:09 - not found path
+[33mERROR[39m: GET /api/products - 00:03:27 - not found path
+[33mERROR[39m: GET /api/products?page=2&limit=3 - 00:05:11 - not found path
+[31mFATAL[39m: DELETE /api/carts/65345f1555f2bac5edee8fe7 - 23:28:33 - Carts.findAndDelete is not a function

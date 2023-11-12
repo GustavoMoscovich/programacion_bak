@@ -18,12 +18,12 @@ export default class CartsController {
     return response;
   }
  
-  update(id, data) {
-    let response = this.service.update(id, data);
+  update(user_id,pid,qty) {
+    let response = this.service.update(user_id,pid,qty);
     return response;
   }
-  destroy(id) {
-    let response = this.service.destroy(id);
+  destroy(user_id,pid) {
+    let response = this.service.destroy(user_id,pid);
     return response;
   }
 }

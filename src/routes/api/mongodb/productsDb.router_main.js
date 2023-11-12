@@ -24,9 +24,11 @@ export default class ProdRouter extends Router_main {
         });
 
         // Obtiene la lista de productos de la base de MongoDB
-        this.read("/", ["PUBLIC"], async (req, res, next) => {
+        this.read("/:limit/:page", ["PUBLIC"], async (req, res, next) => {
             try {
-                let response = await ProdsController.readController();
+                const {page} = req.params
+                const {limit} = req.params
+                let response = await ProdsController.readController((typeof(limit)=='undefined'? 9 : limit), (typeof(page)=='undefined'? 1 : page) );
                 if (response) {
                     return res.sendSuccess(response);
                 } else {
@@ -52,7 +54,7 @@ export default class ProdRouter extends Router_main {
             }
         });
 
-        this.put("/:id", ["ADMIN"], verify_jwt_token_cookie, is_admin, async (req, res, next) => {
+        this.put("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_admin, async (req, res, next) => {
             try {
                 let { id } = req.params;
                 let data = req.body;

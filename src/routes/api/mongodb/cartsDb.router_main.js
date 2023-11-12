@@ -43,16 +43,12 @@ export default class CartRouter extends Router_main {
             }
         });
 
-
-
-
-
-
-        this.put("/:id", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
+        this.put("/:pid/:qty", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
             try {
-                let { id } = req.params;
-                let data = req.body;
-                let response = await Ca_Controller.update(id, data);
+                let user_id=req.user._id
+                let { pid } = req.params;
+                let { qty } = req.params;
+                let response = await Ca_Controller.update(user_id,pid,qty);
                 if (response) {
                     return res.sendSuccess(response);
                 } else {
@@ -64,10 +60,11 @@ export default class CartRouter extends Router_main {
             }
         });
 
-        this.delete("/:id", ["PUBLIC"], verify_jwt_token_cookie,  async (req, res, next) => {
+        this.delete("/:pid", ["PUBLIC"], verify_jwt_token_cookie,  async (req, res, next) => {
             try {
-                let { id } = req.params;
-                let response = await Ca_Controller.destroy(id);
+                let user_id=req.user._id
+                let { pid } = req.params;
+                let response = await Ca_Controller.destroy(user_id,pid);
                 if (response) {
                     return res.sendSuccess(response);
                 } else {

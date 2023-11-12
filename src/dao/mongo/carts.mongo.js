@@ -45,8 +45,8 @@ export default class CartsMongo {
         }
       }
 
-    async update(id, data) {
-      let one = await Carts.findByIdAndUpdate(id, data, { new: true });
+    async update(user_id,pid,qty) {
+      let one = await Carts.findOneAndUpdate( { $and: [ { user_id: user_id },{product_id: pid } ] }, {$set: {quantity: qty} }, { new: true });
       if (one) {
         return {
           message: "Producto Modificado",
@@ -57,8 +57,8 @@ export default class CartsMongo {
       }
     }
 
-    async destroy(id) {
-      let deleted = await Carts.findAndDelete({ user_id: id });
+    async destroy(user_id,pid) {
+      let deleted = await Carts.findOneAndDelete(  {$and: [ {user_id: user_id },{product_id: pid}] } );
       if (deleted) {
         return {
           message: "Productos del carrito borrados",

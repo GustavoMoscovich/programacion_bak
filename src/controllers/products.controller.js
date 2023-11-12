@@ -13,8 +13,8 @@ export default class ProductsController {
     let response = this.service.createService(data);
     return response;
   }
-  readController() {
-    let response = this.service.readService();
+  readController(limit, page) {
+    let response = this.service.readService(limit, page);
     return response;
   }
   readOneController(id) {

@@ -7,6 +7,6 @@ export default class CartsRepository {
   }
   create = (data) => this.model.create(data);
   read = (id) => this.model.read(id);
-  update = (id, data) => this.model.update(id, data);
-  destroy = (id) => this.model.destroy(id);
+  update = (user_id,pid,qty) => this.model.update(user_id,pid,qty);
+  destroy = (user_id,pid) => this.model.destroy(user_id,pid);
 }
