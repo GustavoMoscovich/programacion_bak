@@ -20,25 +20,21 @@ export default class CartsMongo {
             .populate("user_id","email");
 
         if ( products.length > 0 ) {
-          let cartdetail = await Carts.aggregate([
-            { $match: { id } },
-            { $set: { subtotal: { $multiply: ["10", "$quantity"] } } },
-            { $group: { _id: "$user_id", total: { $sum: "$subtotal" } } },
-            {
-              $project: {
-                _id: 0,
-                user_id: "$_id",
-                total: "$total",
-                date: new Date(),
-              },
-            },
-          ]);
-
+          let cart_total = await Carts.aggregate([ 
+            { $match: { user_id: id } },
+            { 
+            $group: {             
+              _id: null,
+                total: { 
+                    $sum: { $multiply: [ "$quantity","$price"]} 
+                } 
+            } 
+        } ] )
 
           return {
             message: "Producto Encontrado..!",
             response: products,
-            cartdetail,
+            cart_total,
           };
         } else {
           return null;

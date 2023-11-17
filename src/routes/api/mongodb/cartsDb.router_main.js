@@ -5,6 +5,7 @@ import Router_main from "../router_main.js";
 import CartsController from "../../../controllers/carts.controller.js";
 import is_admin from "../../../middlewares/is_admin.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
+//import { log } from "winston";
 
 const Ca_Controller = new CartsController();
 
@@ -14,7 +15,6 @@ export default class CartRouter extends Router_main {
         // crea un nuevo producto en el carrito
         this.post("/", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
             try {
-                console.log("Create Capa Enrutamiento")
                 let data = req.body
                 data.user_id = req.user._id
                 data.price=80
@@ -29,8 +29,6 @@ export default class CartRouter extends Router_main {
 
         this.read("/", ["PUBLIC"], verify_jwt_token_cookie, async (req, res, next) => {
             try {
-
-                console.log('READ... cart capa router req',req.user._id)
                 let user_id=req.user._id
                 let response = await Ca_Controller.read(user_id);
                 if (response) {

@@ -1,7 +1,6 @@
 export default function (req,res,next) {
     try {
- 
-        if (req.session.role===1)  {   // los usuarios con role = 1 son administradores 
+        if (req.user.role===1)  {   // los usuarios con role = 1 son administradores 
             next()
         } else {
             return res.status(403).json({

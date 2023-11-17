@@ -18,6 +18,7 @@ export default function () {
       async (req, username, password, done) => {
         //callback que será la encargada de procesar los datos y dejarme PASAR
         try {
+
           //let one = await User.findOne({ mail:req.body.mail })
           let one = await User.findOne({ email: username }); //en L18 se configuró como campo principal el mail popr eso esto es lo mismo que la L22
           if (!one) {

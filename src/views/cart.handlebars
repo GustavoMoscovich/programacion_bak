@@ -10,7 +10,7 @@
                 <div class="col-12 d-flex flex-column justify-content-center" id="cart">
 
 
-                  {{#each products}}
+                  {{#each response}}
 
                     <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
                         <img src="{{this.product_id.thumbnails.[0]}}" class="card-img-top p-3 m-0" style="width: 100px" alt="{{this.product_id.title}}">
@@ -24,7 +24,7 @@
                   {{/each}}
 
                   <div class="card m-2 d-flex flex-row justify-content-center align-items-center">
-                      <p class="card-text text-end p-2 m-0" style="width: 400px">Total del Carrito: $ {{totalprice}}</p>
+                      <p class="card-text text-end p-2 m-0" style="width: 400px">Total del Carrito: $ {{totalcart}}</p>
                   </div>
 
                 </div>

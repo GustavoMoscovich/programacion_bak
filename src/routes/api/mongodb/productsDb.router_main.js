@@ -73,6 +73,7 @@ export default class ProdRouter extends Router_main {
         this.delete("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_admin, async (req, res, next) => {
             try {
                 let { id } = req.params;
+                console.log("router de prod: ",id)
                 let response = await ProdsController.destroyController(id);
                 if (response) {
                     return res.sendSuccess(response);

@@ -9,7 +9,8 @@
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
     "test-simple": "artillery quick --count 40 --num 50 'http://localhost:8080/api/simple' -o ./src/tests/performance/testSimple.json ",
-    "test-advance": "artillery run ./src/tests/performance/advance.yaml --output ./src/tests/performance/testAdvance.json"
+    "test-advance": "artillery run ./src/tests/performance/advance.yaml --output ./src/tests/performance/testAdvance.json",
+    "super": "mocha testdev/supertest"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "artillery-plugin-metrics-by-endpoint": "^1.2.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "chai": "^4.3.10",
     "commander": "^11.0.0",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
@@ -28,6 +30,7 @@
     "express-session": "^1.17.3",
     "handlebars-paginate": "^0.1.0",
     "jsonwebtoken": "^9.0.2",
+    "mocha": "^10.2.0",
     "mongoose": "^7.4.1",
     "mongoose-paginate-v2": "^1.7.31",
     "multer": "^1.4.5-lts.1",
@@ -47,6 +50,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "supertest": "^6.3.3"
   }
 }

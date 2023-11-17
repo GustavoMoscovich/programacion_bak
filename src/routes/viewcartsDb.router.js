@@ -12,11 +12,11 @@ const Ca_Controller = new CartsController();
 
 router.get("/", async (req, res) => {
 
-  const user = await verificar(req,res)
+  const user = await verificar(req, res)
 
 });
 
-async function verificar (req,res)  {
+async function verificar(req, res) {
   const auth = req.cookies;
   let user = {}
   if (!auth.token) {
@@ -24,20 +24,13 @@ async function verificar (req,res)  {
   } else {
     const token = auth.token
     jwt.verify(token, config.SECRET_KEY, async (error, credentials) => {
-      //credentials son los datos DESTOKENIZADOS del token
-      //try {
-        //console.log("en try credentials ",credentials)
-        const newuser = await User.findOne({ email: credentials.mail });
-        const onecart = await Ca_Controller.read(newuser._id)
-        const xxx = JSON.stringify( onecart.response)
-        const products = JSON.parse(xxx)
-        res.render("cart", { products });
-        return newuser
-      //} catch (error) {
-      //  console.log("en catch", error)
-      //  return {}
-      //};
-    }) 
+      const newuser = await User.findOne({ email: credentials.mail });
+      const onecart = await Ca_Controller.read(newuser._id)
+      const products = JSON.parse(JSON.stringify(onecart))
+      products.totalcart = onecart.cart_total[0].total
+      res.render("cart", products);
+      return newuser
+    })
   }
 }
 

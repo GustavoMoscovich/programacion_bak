@@ -5,11 +5,10 @@ async function modprodcart(pid,elem) {
     let quantity = selector.value
 
     try {
-        //let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}/${quantity}`, {
-        let response = await fetch(`/api/carts/`, {
-            method: 'POST',
+        let response = await fetch(`/api/carts/${pid}/${quantity}`, {
+        //let response = await fetch(`/api/carts/`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: `{ "product_id": "${pid}", "quantity": ${quantity} }`
         })
         response = await response.json()
         if (response.status===200) {
@@ -26,7 +25,7 @@ async function modprodcart(pid,elem) {
 // Elimina uno de los productos del carrito. La llamada viene desde el carrito
 async function delprodcart(pid) {
     try {
-        let response = await fetch(`/api/carts/64cc17b302a4e5bd2baa41f6/product/${pid}`, {
+        let response = await fetch(`/api/carts/${pid}`, {
             method: 'DELETE'
         })
         response = await response.json()

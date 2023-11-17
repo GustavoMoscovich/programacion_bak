@@ -34,6 +34,7 @@ export default class AuthRouter extends Router_main {
             success: true,
             response: "Se ha creado el usuario asignando el ID " + req.user._id,
             message: "Se ha creado el usuario asignando el ID " + req.user._id,
+            _id: req.user._id
           });
         } catch (error) {
           next(error);
@@ -85,6 +86,29 @@ export default class AuthRouter extends Router_main {
         }
       }
     );
+
+    this.delete(
+      "/:id_user", ["PUBLIC"],
+      passport.authenticate("jwt"),
+      async (req, res, next) => {
+        try {
+          let { id_user } = req.params
+          let oneuser = await User.findById(id_user)
+          if (oneuser) {
+            await User.findByIdAndRemove(id_user)
+            return res.sendSuccess({
+              success: true,
+              response: "Se ha eliminado el usuario",
+              message: "Se ha eliminado el usuario",
+            });
+          };
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
+
+
 
     this.post(
       "/premium/:user", ["PUBLIC"],
