@@ -77,3 +77,29 @@
 [31mFATAL[39m: DELETE /api/carts/undefined - 12:05:16 - Cast to ObjectId failed for value "undefined" (type string) at path "product_id" for model "carts"
 [31mFATAL[39m: DELETE /api/carts/undefined - 12:48:56 - Cast to ObjectId failed for value "undefined" (type string) at path "product_id" for model "carts"
 [31mFATAL[39m: DELETE /api/products/undefined - 12:48:57 - Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "products"
+[31mFATAL[39m: POST /api/products - 12:27:32 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: PUT /api/carts/null/10 - 12:27:35 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/carts/null - 12:27:35 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: POST /api/products - 12:32:43 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: PUT /api/carts/null/10 - 12:32:46 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/carts/null - 12:32:47 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: POST /api/products - 12:39:08 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: POST /api/products - 12:40:39 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: DELETE /api/auth/null - 12:40:41 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "users"
+[31mFATAL[39m: POST /api/products - 12:41:41 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: POST /api/products - 12:43:10 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: PUT /api/carts/null/10 - 12:43:13 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/carts/null - 12:43:13 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: POST /api/products - 12:46:32 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: POST /api/auth/register - 12:46:36 - Operation `users.findOne()` buffering timed out after 10000ms
+[31mFATAL[39m: POST /api/products - 20:26:46 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: PUT /api/products/null - 20:26:46 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[31mFATAL[39m: PUT /api/carts/null/10 - 20:26:49 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/carts/null - 20:26:49 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/products/null - 20:26:49 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[31mFATAL[39m: POST /api/products - 20:31:51 - Cannot read properties of undefined (reading 'role')
+[31mFATAL[39m: PUT /api/products/null - 20:31:52 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[31mFATAL[39m: PUT /api/carts/null/10 - 20:31:54 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/carts/null - 20:31:54 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
+[31mFATAL[39m: DELETE /api/products/null - 20:31:55 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
+[33mERROR[39m: GET /favicon.ico - 17:30:29 - not found path

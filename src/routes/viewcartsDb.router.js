@@ -20,14 +20,15 @@ async function verificar(req, res) {
   const auth = req.cookies;
   let user = {}
   if (!auth.token) {
-    return {}
+    res.render("cart");
+    //return {}
   } else {
     const token = auth.token
     jwt.verify(token, config.SECRET_KEY, async (error, credentials) => {
       const newuser = await User.findOne({ email: credentials.mail });
       const onecart = await Ca_Controller.read(newuser._id)
       const products = JSON.parse(JSON.stringify(onecart))
-      products.totalcart = onecart.cart_total[0].total
+      //products.totalcart = onecart.cart_total[0].total
       res.render("cart", products);
       return newuser
     })

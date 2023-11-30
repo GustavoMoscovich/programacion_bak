@@ -25,27 +25,37 @@ describe(">>>>> Testing PRODUCTS and CARTS integrated with AUTH <<<<<", () => {
     name: "Juan Testing",
     email: "juantesting@coder.com",
     password: "1234asdf",
-    role: 1,
+    role: 0,
   };
 
   let id_user = null;
   let id_product = null;
   let token = {};
 
-  it("Must register a user", async () => {
+  it("Must register a simple user", async () => {
     const response = await requester.post("/auth/register").send(data_user);
     const { _body, statusCode } = response;
     id_user = _body._id;
     expect(statusCode).to.be.equals(201);
   });
 
-  it("Must log in an admin user", async () => {
+  it("Must log in as simple user", async () => {
     const response = await requester.post("/auth/login").send(data_user);
     const { statusCode, headers } = response;
     token.key = headers["set-cookie"][0].split("=")[0];
     token.value = headers["set-cookie"][0].split("=")[1];
     expect(statusCode).to.be.equals(200);
   });
+
+  
+  it("Must change user type from simple to premium", async () => {
+    const response = await requester
+      .post("/auth/premium/juantesting@coder.com")
+      .set("Cookie", [token.key + "=" + token.value]);
+    const { statusCode } = response;
+    expect(statusCode).to.be.equals(200);
+  });
+
 
   // creación de un producto para luego ser usado en el carrito de compras
   it("Must create a new product to be used in the cart testing and respond with statusCode = 201", async () => {
@@ -118,7 +128,7 @@ describe(">>>>> Testing PRODUCTS and CARTS integrated with AUTH <<<<<", () => {
     expect(statusCode).to.be.equals(200)
   });
 
-  it("Must sign out an admin user", async () => {
+  it("Must sign out an premium user", async () => {
     const response = await requester.post("/auth/signout").set("Cookie", [token.key + "=" + token.value])
     const { statusCode, _body } = response
     expect(statusCode).to.be.equals(200)
