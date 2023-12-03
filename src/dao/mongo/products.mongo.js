@@ -8,6 +8,7 @@ export default class ProductsMongo {
   async createModel(data) {
 
     let one = await Products.create(data);
+
     return {
       message: "Producto Creado!",
       response: { product_id: one._id },

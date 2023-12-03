@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { faker } from '@faker-js/faker';
-import ProdsRepository from '../../repositories/products.rep.js';
+import ProdsController from '../../controllers/products.controller.js'
 
 const router = Router();
 
@@ -22,10 +22,12 @@ const product = () => {
 router.post("/", async (req, res) => {
 
   try {
-    let prodRepo = new ProdsRepository();
-    for (let i = 0; i < 1; i++) {
+    let prodContr = new ProdsController();
+    for (let i = 0; i < 100; i++) {
       let data = product();
-      response =  await  prodRepo.createModel(data);
+      console.log('Creando: ',i)
+      response =  await  prodContr.createController(data);
+      console.log('Creado: ')
     }
 
    

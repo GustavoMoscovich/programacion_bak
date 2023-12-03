@@ -86,6 +86,7 @@ inicializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 app.use(winston);
 
 // implementación HandleBars

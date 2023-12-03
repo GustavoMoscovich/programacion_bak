@@ -103,3 +103,5 @@
 [31mFATAL[39m: DELETE /api/carts/null - 20:31:54 - Cast to ObjectId failed for value "null" (type string) at path "product_id" for model "carts"
 [31mFATAL[39m: DELETE /api/products/null - 20:31:55 - Cast to ObjectId failed for value "null" (type string) at path "_id" for model "products"
 [33mERROR[39m: GET /favicon.ico - 17:30:29 - not found path
+[33mERROR[39m: GET /favicon.ico - 17:43:09 - not found path
+[33mERROR[39m: GET /favicon.ico - 23:12:14 - not found path

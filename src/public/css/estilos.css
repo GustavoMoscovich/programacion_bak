@@ -6,7 +6,7 @@
   box-sizing: border-box; }
 
 .ecommerce {  
-  background:wheat;
+  background: rgb(231, 232, 236) ;
 }
 
 .main_contacto {  
@@ -69,6 +69,7 @@
 
 .card_agregada {
   background-color:darkgray ;
+  margin-left: 10px;
 }
 
 
