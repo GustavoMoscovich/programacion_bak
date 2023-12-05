@@ -20,6 +20,7 @@ import create_token from "../../../middlewares/create_token.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
 
 
+
 export default class AuthRouter extends Router_main {
   init() {
     this.post(

@@ -1,0 +1,280 @@
+components:
+  schemas:
+    Auth:
+      type: object
+      properties:
+        name:
+          description: User Name and Last Name
+          type: string
+        email:
+          description: User's E-mail
+          type: string
+        password:
+          description: User's Password
+          type: string
+        role:
+          description: Define app user's permissions
+          type: number
+      example:
+        name : Juan Perez
+        email : Juan.Perez@dominio.com
+        password : Clave1234
+        role : 0
+  responses:
+    register:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: ID del usuario agregado
+      example:
+        status: success
+        payload:
+          message: Se ha creado el usuario asignando el ID 656f388c36beb06fc8dd6cc4
+          _id: 656f388c36beb06fc8dd6cc4
+    login:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Devuelve todos los datos del usuario y el token de autenticación
+      example:
+        status: success
+        message: el usuario al.gm.it@gmail.com inició sesión
+        payload:
+          _id: 656f388c36beb06fc8dd6cc4
+          name: Rosa Maria
+          email: al.gm.it@gmail.com
+          password: $2a$10$Gw3rACrUfMfPzQwVe3XSBe1YMRhn.8cTUGXVzlIPUTrvsyje/H1eG
+          role: 1
+          __v: 0
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoiYWwuZ20uaXRAZ21haWwuY29tIiwiaWF0IjoxNzAxNzg4MDA1LCJleHAiOjE3MDIzOTI4MDV9.lzC36YickQHcjOqAbuasEyfaPN6_u4MuOb2TORcmxws
+    signout:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: Mensaje sobre la acción realizada
+      example:
+          success: true
+          message: sesion cerrada
+    delete:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+      example:
+          status: success
+          message: Se ha eliminado el usuario
+    premium:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+      example:
+        status: success
+        message: Se ha modificado el tipo de usuario
+    forbidden:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: forbidden
+        from: POST /api/auth/signout middleware
+        message: Not Allowed
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: error
+        from: controller
+        message: No se encontró el Usuario
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        from: error handler
+        message: El valor no está definido
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+paths:
+  /api/auth:
+    post:
+      summary: Agregar un nuevo usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Auth'
+      responses:
+        "201":
+          description: Éxito en el alta del nuevo Usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/register'
+        "500":
+          description: Falla del servidor al crear un usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/auth/login:
+    post:
+      summary: reliza login de usuario basado en mail y clave
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              email: juan@dominio.com
+              password: 1234asdf
+      responses:
+        "200":
+          description: Éxito en login del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/login'
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al tratar de realizar login de usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/auth/signout:
+    post:
+      summary: reliza cierre de sesión del usuario basado en JWT Cookie
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Sesion cerrada
+        "500":
+          description: Falla del servidor al tratar de cerrar la sesion del usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/auth/{uid}:
+    delete:
+      summary: Eliminar un usuario de la base basado en el _id
+      tags:
+        - Auth
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ObjectId del usuario a eliminar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: usuario eliminado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/delete'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al eliminar un Usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+  /api/auth/premium/{mail}:
+    post:
+      summary: Cambia el tipo de usuario de simple a Premium y viceversa
+      tags:
+        - Auth
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: mail
+          in: path
+          required: true
+          description: E-mail del usuario sobre el que se quiere hacer el cambio
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Tipo de usuario modificado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/premium'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al eliminar un Usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
