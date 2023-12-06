@@ -6,6 +6,7 @@ import ProductsController from "../../../controllers/products.controller.js";
 import is_admin from "../../../middlewares/is_admin.js";
 import verify_jwt_token_cookie from "../../../middlewares/verify_jwt_token_cookie.js";
 import is_premuim from "../../../middlewares/is_premuim.js";
+import is_admin_or_premium from "../../../middlewares/is_admin_or_premium.js";
 
 const ProdsController = new ProductsController();
 
@@ -13,7 +14,7 @@ export default class ProdRouter extends Router_main {
     init() {
 
         // crea un nuevo producto en la base de MongoDB
-        this.post("/", ["PUBLIC"], verify_jwt_token_cookie, is_premuim, async (req, res, next) => {
+        this.post("/", ["PUBLIC"], verify_jwt_token_cookie, is_admin_or_premium, async (req, res, next) => {
             try {
                 let data = req.body
                 let response = await ProdsController.createController(data);
@@ -54,7 +55,7 @@ export default class ProdRouter extends Router_main {
             }
         });
 
-        this.put("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_premuim, async (req, res, next) => {
+        this.put("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_admin_or_premium, async (req, res, next) => {
             try {
                 let { id } = req.params;
                 let data = req.body;
@@ -70,7 +71,7 @@ export default class ProdRouter extends Router_main {
             }
         });
 
-        this.delete("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_premuim, async (req, res, next) => {
+        this.delete("/:id", ["PUBLIC"], verify_jwt_token_cookie, is_admin_or_premium, async (req, res, next) => {
             try {
                 let { id } = req.params;
                 console.log("router de prod: ",id)

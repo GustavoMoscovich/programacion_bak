@@ -32,7 +32,11 @@
                             <label for="productPhoto" class="form-label">Imágen</label>
                             <input type="text" class="form-control" name="url_photo" id="productPhoto" aria-describedby="photoSource"/>
                         </div>
-                        <button id='newProduct' type="submit" class="btn btn-danger mt-2">Grabar Producto</button>
+                        {{#if role}}
+                            <button id='newProduct' type="submit" class="btn btn-danger mt-2">Grabar Producto</button>
+                        {{else}}
+                            <button disabled id='newProduct' type="submit" class="btn btn-danger mt-2">Grabar Producto</button>
+                        {{/if}}
                     </form>
                 </div>
                 <div id="productTable" class="col-6"></div>
